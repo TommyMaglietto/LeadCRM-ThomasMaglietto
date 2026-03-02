@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LeadGen Engine
 
 A full-stack lead generation platform that discovers local businesses without websites and ranks them by sales priority. Built for agencies and freelancers who sell web design services to trades like plumbers, roofers, electricians, and HVAC companies.
@@ -227,3 +228,7 @@ lead-generator/
 ## License
 
 MIT
+=======
+# LeadCRM-ThomasMaglietto
+A full Lead Generator End to end with Customer Management made to generate leads for website development
+>>>>>>> 5c900c64da270341ad3a7fd94d8ff552789e44c2
