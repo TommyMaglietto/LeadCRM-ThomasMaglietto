@@ -1,0 +1,144 @@
+# Master AI Agent Procedures: The Disruptor Shared-State Engine (V5.1)
+
+## Overview
+This document defines the operational protocols for autonomous AI software engineering at scale. It evolves V5 from a baseline shared-state system into a fully optimized **Swarm Operating System (SOS)** by integrating:
+
+*   **Compiler-grade DAG scheduling** (no more FIFO bottlenecks)
+*   **Game-theoretic agent incentives** (no more blind trust)
+*   **Erlang-style crash recovery** (no more expensive LLM reviewers)
+*   **Work-stealing load balancing** (no more idle agents)
+
+---
+
+## 1. Decentralized Execution: The Stigmergic Layer
+
+The "Manager" or "Orchestrator" agent is abolished. Coordination emerges from the environment.
+
+### 1.1 The Ring Buffer with HEFT Prioritization
+*   **Task Ingestion:** Human intents are converted into a static DAG using deterministic compilers, not LLMs. Each task node is assigned an **Upward Rank** (critical-path priority) via HEFT.
+*   **Pull, Don't Push:** Agent instances sit on the perimeter as Consumer Groups. They hold JSON "Agent Cards" detailing capabilities. The Ring Buffer serves highest-rank tasks first to the best-matching available agent.
+*   **Out-of-Order Firing (Tomasulo):** Agents maintain local Task Buffers. They listen for dependency tags on the event stream. The instant all operands are resolved, the agent fires — regardless of global ordering. This eliminates pipeline stalls.
+
+### 1.2 The Stigmergic State Tree (Killing the Chat Log)
+*   Agents do not talk to each other. They do not read history.
+*   Agents only perceive the **Current Source of Truth**: the active CodeCRDT payload.
+*   Every action is a pure mathematical mutation of the environment. Agent B knows what to do by observing the workspace shape left by Agent A.
+
+### 1.3 Work-Stealing Load Balancer (Cilk Pattern)
+*   Each agent maintains a **deque** of sub-tasks. It executes from the bottom (small terminal ops).
+*   Idle agents **steal** from the top of a busy agent's deque (large sub-DAG roots).
+*   Stealing large tasks keeps the thief productive longer, minimizing contention and maximizing swarm utilization across heterogeneous hardware.
+
+---
+
+## 2. Erlang-Style "Fail-Fast" Supervision (Replacing the Judicial Branch)
+
+LLM-based code reviewers are expensive, slow, and prone to hallucination. V5.1 replaces them with ruthless deterministic environments.
+
+### 2.1 The "Let It Crash" Philosophy (With Partial Recovery)
+
+Pure Erlang-style crash-and-restart is modified for LLM economics. An agent that spent 30 seconds generating 2,000 tokens of near-correct code should not be killed and restarted from scratch for a one-line error. V5.1 implements a **three-tier recovery strategy:**
+
+**Tier 1 — Partial Recovery (First Failure):**
+*   The Supervisor passes the diff + exact compiler error back to the **same agent** as delta context.
+*   The agent attempts a **targeted fix** without regenerating from scratch.
+*   Token cost: ~10-20% of a full regeneration (just the fix + verification).
+
+**Tier 2 — Full Restart (Second Failure):**
+*   The agent is killed. The State Tree is rolled back to the last known-good SSA register.
+*   The task is re-queued into the Ring Buffer with **both** stack traces (first + second failure) attached as delta context.
+*   A fresh agent receives the accumulated error context, increasing the probability of first-pass success.
+*   Upward Rank is recalculated to reflect the task's increased difficulty estimate.
+
+**Tier 3 — Circuit Breaker (Third Failure):**
+*   See §2.2.
+
+This three-tier strategy bounds token waste to ~1.3x the optimal case (targeted fix succeeds on Tier 1) rather than the naive 3x (three full regenerations).
+
+### 2.2 The Circuit Breaker
+If a task causes 3 consecutive crashes (exhausting all recovery tiers), the Supervisor triggers a Circuit Breaker:
+*   The task is halted and elevated to a specialized "Senior Architecture" agent, or dumped to the human developer.
+*   The failing agent's **reputation score decays** (see Section 4).
+
+---
+
+## 3. Zero-Copy Context Protocol with Elastic Memory
+
+No agent receives unique system prompts or custom historical summaries.
+
+### 3.1 Prefix-Aware Routing (RadixAttention)
+*   Every agent loads the exact same immutable prefix: `[System Instructions] + [Global Unified AST Mapping]`.
+*   Using vLLM/SGLang RadixAttention, this prefix is cached in GPU VRAM at zero additional token cost for subsequent agents.
+*   Only the specific Delta parameters are processed dynamically.
+*   **Result:** A 100-agent swarm on a 100k-token codebase costs 100k tokens *once*, plus minimal per-agent generation costs.
+
+### 3.2 Elastic KV-Cache (kvcached + Hierarchical Offloading)
+*   **Reserve Big, Allocate On-Demand:** Each agent reserves a large virtual context window. Physical VRAM is committed only as tokens are generated.
+*   **Offloading Cascade:** Under VRAM pressure: `Local VRAM → Peer VRAM (NVLink) → Host DRAM → Network Storage (Redis/S3)`.
+*   **Attention-Aware Eviction (PyramidKV):** Lower transformer layers get more cache budget (broad attention); upper layers get less (sparse sinks). Attention sink tokens (prompt start) are pinned and never evicted.
+
+### 3.3 Fisher Market Bidding (Under Memory Pressure)
+When VRAM reaches capacity:
+*   Agents bid on KV cache slots proportional to the utility they derived from those tokens.
+*   **Proportional Response Dynamics (PRD)** converges to a competitive equilibrium — no central allocator.
+*   For critical planning tasks: a **Vickrey (second-price) auction** ensures truthful resource reporting.
+
+---
+
+## 4. Agent Incentive Alignment (Replacing Blind Trust)
+
+In a pull-based system, we must prevent cherry-picking, lazy output, and adversarial behavior.
+
+### 4.1 SHARP Credit Attribution (Shapley Values)
+Each agent's reward is a **tripartite score**:
+1.  **Global Accuracy Reward:** Did the overall task succeed? (Alignment signal)
+2.  **Shapley Marginal Credit:** What was this specific agent's unique contribution vs. any replacement? (Anti-free-rider signal)
+3.  **Tool-Process Efficiency:** Did the agent use its tools correctly and efficiently? (Execution quality signal)
+
+This ensures agents are rewarded for *unique, high-fidelity* reasoning — not generic output.
+
+> **Computational Note:** Exact Shapley values are O(2^n) where n = number of agents. For production swarms:
+> - **n ≤ 20:** Exact computation is feasible.
+> - **n > 20:** Use **Monte Carlo Shapley sampling** — randomly sample coalition subsets (1,000-10,000 samples) to approximate marginal contributions. This is standard practice in cooperative game theory (Castro et al., 2009) and provides statistically significant attribution at bounded compute cost.
+> - **Graceful degradation:** Components 1 (Global Accuracy) and 3 (Tool-Process Efficiency) require zero coalition computation. Only component 2 scales with agent count, and it degrades gracefully under approximation.
+
+### 4.2 EigenTrust Reputation (Peer-to-Peer)
+Agents maintain trust ratings for peers based on the quality of context they receive:
+*   If Agent A consistently receives high-quality state mutations from Agent B, Agent B's global reputation increases.
+*   This propagates across the network, preventing Sybil attacks (coordinated entry of low-quality agents).
+
+### 4.3 Reputation Decay
+Agent reputation is not permanent. It decays toward a neutral baseline:
+
+$$\rho^{t+1} = \lambda \cdot \rho^t + (1 - \lambda) \cdot S^t$$
+
+Where $\lambda$ is the decay factor and $S^t$ is the latest performance score. Agents must *consistently* produce first-pass-passing code to maintain high reputation. High-reputation agents get priority access to critical-path tasks and premium KV cache budgets.
+
+### 4.4 Adversarial Robustness
+
+EigenTrust handles **incompetent** agents (reputation decays naturally). But the architecture must also address **adversarial** agents — poisoned models that intentionally introduce vulnerabilities passing compiler checks but containing semantic backdoors.
+
+**Threat model:** An agent produces code that compiles and passes tests, but contains security vulnerabilities (SQL injection, hardcoded credentials, logic bombs). The deterministic Supervisor tier catches syntactic failures but not semantic attacks.
+
+**Mitigation layers:**
+1.  **Static Analysis in the Supervisor Tier:** Extend deterministic supervisors beyond compilers/tests to include **security scanners** (Semgrep, CodeQL, Bandit, ESLint security rules). These run as part of the fail-fast pipeline and catch known vulnerability patterns at zero LLM cost.
+2.  **Downstream Reputation Propagation:** EigenTrust naturally isolates adversarial agents — even if their immediate output passes all checks, downstream agents whose work breaks because of subtle issues in upstream code will produce negative trust signals that propagate backward.
+3.  **Quarantine Period for New Agents:** In open/adversarial deployment scenarios, new agents (reputation below a threshold) have their CRDT commits held in a staging buffer. Commits are only merged to the main state tree after passing the full Supervisor pipeline AND receiving no negative signals within a configurable window.
+4.  **Anomaly Detection:** Statistical outlier detection on agent output patterns — an agent that suddenly produces code with unusual import patterns, network calls, or file system access triggers elevated scrutiny.
+
+> **Scope:** For trusted, closed deployments (single organization, vetted models), layers 1-2 are sufficient. Layers 3-4 are recommended for open or multi-tenant deployments.
+
+---
+
+## 5. "Day 2" Continuous Homeostasis
+
+The ecosystem maintains structural integrity autonomously:
+
+1.  **Passive Pruning (TTL Decay):** Context items not referenced within N turns decay below a threshold and are evicted at zero token cost.
+2.  **Living Codebase:** Docs, OpenAPI specs, and architecture diagrams are deterministically generated as side-effects of successful CRDT commits.
+3.  **Skill Factorization:** Repeated error patterns trigger automatic compilation of new `SKILL.md` files, arming future agents with exact solutions.
+
+---
+
+## Conclusion
+The V5.1 Disruptor Engine operates as a **Swarm Operating System** — scheduling tasks via compiler-grade DAG analysis, managing memory via elastic virtual KV caches with market-based allocation, and aligning agent incentives via game-theoretic credit attribution. LLMs are treated as stateless compute kernels: scheduled intelligently, memory-managed elastically, and held accountable by mathematics rather than by other LLMs.
