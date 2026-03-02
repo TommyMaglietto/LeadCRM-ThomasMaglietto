@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { Dropdown } from '@/components/ui/Dropdown';
+import { CityAutocomplete, type SelectedCity } from '@/components/ui/CityAutocomplete';
 import { DEFAULT_TRADES } from '@/lib/constants';
 
 // ---------------------------------------------------------------------------
@@ -75,27 +75,6 @@ interface ScanFormProps {
 }
 
 // ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Parse the towns textarea value into a clean array of "Town, ST" strings.
- * Appends the selected state abbreviation if no state is provided in the token.
- */
-function parseTowns(raw: string, defaultState: string): string[] {
-  return raw
-    .split(',')
-    .map((t) => t.trim())
-    .filter(Boolean)
-    .map((t) => {
-      // If the town already contains a comma-separated state (e.g. entered separately)
-      // or a two-letter state code at the end, keep as-is
-      const hasState = /,\s*[A-Z]{2}$/.test(t) || /\s+[A-Z]{2}$/.test(t);
-      return hasState ? t : `${t}, ${defaultState}`;
-    });
-}
-
-// ---------------------------------------------------------------------------
 // ScanForm
 // ---------------------------------------------------------------------------
 
@@ -104,7 +83,7 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
   const [selectedTrades, setSelectedTrades] = useState<Set<string>>(new Set());
 
   // Town input state
-  const [townsRaw, setTownsRaw] = useState('');
+  const [selectedCities, setSelectedCities] = useState<SelectedCity[]>([]);
   const [defaultState, setDefaultState] = useState('NC');
   const [refresh, setRefresh] = useState(false);
 
@@ -167,9 +146,8 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
         newErrors.trades = 'Select at least one trade.';
       }
 
-      const parsedTowns = parseTowns(townsRaw, defaultState);
-      if (parsedTowns.length === 0) {
-        newErrors.towns = 'Enter at least one town.';
+      if (selectedCities.length === 0) {
+        newErrors.towns = 'Select at least one town.';
       }
 
       if (Object.keys(newErrors).length > 0) {
@@ -178,9 +156,10 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
       }
 
       setErrors({});
-      await onSubmit([...selectedTrades], parsedTowns, refresh);
+      const towns = selectedCities.map((c) => `${c.city}, ${c.state}`);
+      await onSubmit([...selectedTrades], towns, refresh);
     },
-    [selectedTrades, townsRaw, defaultState, refresh, onSubmit]
+    [selectedTrades, selectedCities, refresh, onSubmit]
   );
 
   return (
@@ -281,22 +260,22 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
             Towns
           </label>
           <p className="text-xs text-text-muted">
-            Enter city names separated by commas. State will be appended automatically.
+            Type to search cities. Select from suggestions or paste comma-separated names.
           </p>
         </div>
 
         <div className="flex gap-2 items-start">
-          {/* Town text input */}
+          {/* City autocomplete */}
           <div className="flex-1">
-            <Input
-              placeholder="Huntersville, Cornelius, Davidson"
-              value={townsRaw}
-              onChange={(e) => {
-                setTownsRaw(e.target.value);
+            <CityAutocomplete
+              value={selectedCities}
+              onChange={(cities) => {
+                setSelectedCities(cities);
                 setErrors((err) => ({ ...err, towns: undefined }));
               }}
+              stateFilter={defaultState}
+              placeholder="Search cities..."
               error={errors.towns}
-              className="h-8"
               aria-label="Towns"
             />
           </div>
@@ -311,20 +290,6 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
             />
           </div>
         </div>
-
-        {/* Preview of parsed towns */}
-        {townsRaw.trim() && (
-          <div className="flex flex-wrap gap-1">
-            {parseTowns(townsRaw, defaultState).map((t) => (
-              <span
-                key={t}
-                className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-surface-active text-text-secondary"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Options */}
