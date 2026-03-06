@@ -30,7 +30,7 @@ function ChipGroup<T extends string>({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-xs font-medium text-text-muted uppercase tracking-wide">{label}</span>
+      <span className="text-xs font-medium text-rubble uppercase tracking-wide">{label}</span>
       <div className="flex flex-wrap gap-1.5">
         {options.map((opt) => {
           const active = selected.includes(opt.value);
@@ -46,14 +46,14 @@ function ChipGroup<T extends string>({
               style={
                 active
                   ? {
-                      backgroundColor: opt.bgColor ?? 'rgba(99,102,241,0.2)',
-                      color:           opt.textColor ?? '#a5b4fc',
-                      borderColor:     opt.textColor ?? '#6366f1',
+                      backgroundColor: opt.bgColor ?? 'rgba(196,65,26,0.15)',
+                      color:           opt.textColor ?? '#9B2C1A',
+                      borderColor:     opt.textColor ?? '#C4411A',
                     }
                   : {
-                      backgroundColor: '#18181b',
-                      color:           '#71717a',
-                      borderColor:     '#3f3f46',
+                      backgroundColor: '#EDE9E1',
+                      color:           '#9C9389',
+                      borderColor:     '#1A1A18',
                     }
               }
               aria-pressed={active}
@@ -148,7 +148,7 @@ export function FilterPanel({ values, onChange, onClear, className }: FilterPane
 
       {/* Min Score */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs font-medium text-text-muted uppercase tracking-wide" htmlFor="min-score">
+        <label className="text-xs font-medium text-rubble uppercase tracking-wide" htmlFor="min-score">
           Min Score
         </label>
         <input
@@ -163,9 +163,9 @@ export function FilterPanel({ values, onChange, onClear, className }: FilterPane
           }}
           placeholder="e.g. 50"
           className={cn(
-            'h-8 w-32 rounded-[6px] border bg-surface-input px-3 text-sm text-text-primary placeholder:text-text-muted',
-            'border-border transition-colors outline-none',
-            'focus:border-border-focus focus:ring-1 focus:ring-border-focus'
+            'h-8 w-32 rounded-[6px] border bg-cream px-3 text-sm text-ink placeholder:text-rubble',
+            'border-ink transition-colors outline-none',
+            'focus:border-accent focus:ring-1 focus:ring-accent'
           )}
         />
       </div>

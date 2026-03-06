@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,18 +6,18 @@
 
 @layer base {
   html {
-    background-color: #0a0a0b;
-    color: #fafafa;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #EDE9E1;
+    color: #1A1A18;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
     font-size: 14px;
-    line-height: 1.25rem;
+    line-height: 1.4rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    background-color: #0a0a0b;
-    color: #fafafa;
+    background-color: #EDE9E1;
+    color: #1A1A18;
     min-height: 100vh;
   }
 
@@ -31,26 +31,31 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #0a0a0b;
+    background: #EDE9E1;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #3f3f46;
+    background: #9C9389;
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #52525b;
+    background: #6B6560;
   }
 
   ::selection {
-    background-color: rgba(99, 102, 241, 0.3);
-    color: #fafafa;
+    background-color: rgba(196, 65, 26, 0.2);
+    color: #1A1A18;
   }
 }
 
 @layer components {
-  .font-mono {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  .font-display {
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  .font-serif-accent {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
   }
 }

@@ -10,7 +10,7 @@ export default function PipelinePage() {
       {/* Provide a bit of padding around the board */}
       <div className="flex flex-col h-full px-4 pt-4 pb-2 gap-3">
         {/* Sub-header */}
-        <p className="text-xs text-text-muted shrink-0">
+        <p className="text-xs text-rubble shrink-0">
           Drag leads between columns to update outreach status. Only hot, warm,
           and cold leads are shown.
         </p>

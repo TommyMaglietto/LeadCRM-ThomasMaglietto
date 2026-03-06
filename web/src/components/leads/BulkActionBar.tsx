@@ -54,16 +54,16 @@ export function BulkActionBar({
       className={cn(
         'fixed bottom-6 left-1/2 -translate-x-1/2 z-30',
         'flex items-center gap-3 px-4 py-3 rounded-[10px]',
-        'bg-surface-card border border-border shadow-2xl',
+        'bg-cream-dark border border-ink shadow-card',
         'transition-all duration-200 ease-out'
       )}
     >
       {/* Selection count */}
-      <div className="flex items-center gap-2 pr-3 border-r border-border-subtle">
+      <div className="flex items-center gap-2 pr-3 border-r border-ink/10">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-accent text-white text-[10px] font-bold shrink-0">
           {count > 99 ? '99+' : count}
         </div>
-        <span className="text-sm text-text-primary whitespace-nowrap font-medium">
+        <span className="text-sm text-ink whitespace-nowrap font-medium">
           {count === 1 ? '1 lead' : `${count} leads`} selected
         </span>
       </div>
@@ -74,17 +74,17 @@ export function BulkActionBar({
           value={status}
           onChange={(e) => setStatus(e.target.value as OutreachStatus | '')}
           className={cn(
-            'h-8 appearance-none rounded-[6px] border bg-surface-input pl-3 pr-8 text-sm',
-            'border-border transition-colors outline-none cursor-pointer',
-            'focus:border-border-focus focus:ring-1 focus:ring-border-focus',
-            status ? 'text-text-primary' : 'text-text-muted'
+            'h-8 appearance-none rounded-[6px] border bg-cream pl-3 pr-8 text-sm',
+            'border-ink transition-colors outline-none cursor-pointer',
+            'focus:border-accent focus:ring-1 focus:ring-accent',
+            status ? 'text-ink' : 'text-rubble'
           )}
         >
-          <option value="" disabled className="bg-surface-card text-text-muted">
+          <option value="" disabled className="bg-cream text-rubble">
             Change Status...
           </option>
           {OUTREACH_STATUSES.map((s) => (
-            <option key={s.value} value={s.value} className="bg-surface-card text-text-primary">
+            <option key={s.value} value={s.value} className="bg-cream text-ink">
               {s.label}
             </option>
           ))}
@@ -102,7 +102,7 @@ export function BulkActionBar({
       </div>
 
       {/* Deselect */}
-      <div className="pl-1 border-l border-border-subtle">
+      <div className="pl-1 border-l border-ink/10">
         <Button
           variant="ghost"
           size="md"
@@ -115,7 +115,7 @@ export function BulkActionBar({
 
       {/* Error */}
       {error && (
-        <span className="text-xs text-red-400 ml-2">{error}</span>
+        <span className="text-xs text-red-600 ml-2">{error}</span>
       )}
     </div>
   );

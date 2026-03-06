@@ -75,22 +75,22 @@ export function NotesEditor({
 
   const indicator =
     saveState === 'saving' ? (
-      <span className="text-text-muted text-xs animate-pulse">Saving...</span>
+      <span className="text-rubble text-xs animate-pulse">Saving...</span>
     ) : saveState === 'saved' ? (
-      <span className="text-green-400 text-xs flex items-center gap-1">
+      <span className="text-green-700 text-xs flex items-center gap-1">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
           <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         Saved
       </span>
     ) : saveState === 'error' ? (
-      <span className="text-red-400 text-xs">Save failed</span>
+      <span className="text-red-600 text-xs">Save failed</span>
     ) : null;
 
   return (
     <div className={cn('flex flex-col gap-2', className)}>
       <div className="flex items-center justify-between">
-        <label className="text-xs font-medium text-text-secondary">Notes</label>
+        <label className="text-xs font-medium text-stone">Notes</label>
         <div className="h-4">{indicator}</div>
       </div>
       <textarea
@@ -100,10 +100,10 @@ export function NotesEditor({
         rows={4}
         placeholder="Add notes about this lead..."
         className={cn(
-          'w-full rounded-[6px] border bg-surface-input px-3 py-2.5',
-          'text-sm text-text-primary placeholder:text-text-muted',
-          'border-border transition-colors duration-150 outline-none resize-none',
-          'focus:border-border-focus focus:ring-1 focus:ring-border-focus',
+          'w-full rounded-[6px] border bg-cream px-3 py-2.5',
+          'text-sm text-ink placeholder:text-rubble',
+          'border-ink transition-colors duration-150 outline-none resize-none',
+          'focus:border-accent focus:ring-1 focus:ring-accent',
           saveState === 'error' && 'border-red-500 focus:border-red-500'
         )}
       />

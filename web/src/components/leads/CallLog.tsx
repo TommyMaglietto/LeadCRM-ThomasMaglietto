@@ -15,14 +15,14 @@ const OUTCOME_OPTIONS = [
 ];
 
 const OUTCOME_STYLE: Record<string, { bg: string; text: string }> = {
-  no_answer:          { bg: 'rgba(113,113,122,0.15)', text: '#a1a1aa' },
-  voicemail:          { bg: 'rgba(245,158,11,0.15)',  text: '#fcd34d' },
-  spoke:              { bg: 'rgba(34,197,94,0.15)',   text: '#86efac' },
-  callback_scheduled: { bg: 'rgba(99,102,241,0.15)',  text: '#a5b4fc' },
+  no_answer:          { bg: 'rgba(156,147,137,0.12)', text: '#6B6560' },
+  voicemail:          { bg: 'rgba(184,134,11,0.12)',  text: '#7A5B06' },
+  spoke:              { bg: 'rgba(34,120,60,0.12)',   text: '#1A6B35' },
+  callback_scheduled: { bg: 'rgba(196,65,26,0.12)',   text: '#9B2C1A' },
 };
 
 function OutcomeBadge({ outcome }: { outcome: string }) {
-  const style = OUTCOME_STYLE[outcome] ?? { bg: '#27272a', text: '#a1a1aa' };
+  const style = OUTCOME_STYLE[outcome] ?? { bg: 'rgba(26,26,24,0.06)', text: '#6B6560' };
   const label = OUTCOME_OPTIONS.find((o) => o.value === outcome)?.label ?? outcome;
   return (
     <span
@@ -92,7 +92,7 @@ function AddCallForm({ leadId, onSaved }: AddCallFormProps) {
           placeholder="Select outcome..."
         />
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-text-secondary">Duration (seconds)</label>
+          <label className="text-xs font-medium text-stone">Duration (seconds)</label>
           <input
             type="number"
             min={0}
@@ -100,30 +100,30 @@ function AddCallForm({ leadId, onSaved }: AddCallFormProps) {
             onChange={(e) => setDuration(e.target.value)}
             placeholder="Optional"
             className={cn(
-              'h-8 w-full rounded-[6px] border bg-surface-input px-3 text-sm text-text-primary placeholder:text-text-muted',
-              'border-border transition-colors outline-none',
-              'focus:border-border-focus focus:ring-1 focus:ring-border-focus'
+              'h-8 w-full rounded-[6px] border bg-cream px-3 text-sm text-ink placeholder:text-rubble',
+              'border-ink transition-colors outline-none',
+              'focus:border-accent focus:ring-1 focus:ring-accent'
             )}
           />
         </div>
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-xs font-medium text-text-secondary">Notes</label>
+        <label className="text-xs font-medium text-stone">Notes</label>
         <textarea
           rows={2}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Call notes..."
           className={cn(
-            'w-full rounded-[6px] border bg-surface-input px-3 py-2 text-sm text-text-primary placeholder:text-text-muted',
-            'border-border transition-colors outline-none resize-none',
-            'focus:border-border-focus focus:ring-1 focus:ring-border-focus'
+            'w-full rounded-[6px] border bg-cream px-3 py-2 text-sm text-ink placeholder:text-rubble',
+            'border-ink transition-colors outline-none resize-none',
+            'focus:border-accent focus:ring-1 focus:ring-accent'
           )}
         />
       </div>
 
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && <p className="text-xs text-red-600">{error}</p>}
 
       <Button type="submit" variant="primary" size="sm" loading={loading}>
         Log Call
@@ -142,21 +142,21 @@ export function CallLog({ leadId, entries, onAdded }: CallLogProps) {
   return (
     <div className="flex flex-col gap-4">
       {/* Add call form */}
-      <div className="rounded-[6px] border border-border-subtle bg-surface-input/50 p-3">
-        <p className="text-xs font-medium text-text-secondary mb-3">Log a Call</p>
+      <div className="rounded-[6px] border border-ink/10 bg-cream/50 p-3">
+        <p className="text-xs font-medium text-stone mb-3">Log a Call</p>
         <AddCallForm leadId={leadId} onSaved={onAdded} />
       </div>
 
       {/* History */}
       {entries.length > 0 && (
         <div className="flex flex-col gap-0">
-          <p className="text-xs font-medium text-text-muted mb-2">Call History</p>
-          <div className="flex flex-col divide-y divide-border-subtle">
+          <p className="text-xs font-medium text-rubble mb-2">Call History</p>
+          <div className="flex flex-col divide-y divide-ink/10">
             {entries.map((entry) => (
               <div key={entry.id} className="py-2.5 flex flex-col gap-1.5">
                 <div className="flex items-center justify-between gap-2">
                   <OutcomeBadge outcome={entry.outcome} />
-                  <div className="flex items-center gap-2 text-xs text-text-muted">
+                  <div className="flex items-center gap-2 text-xs text-rubble">
                     {entry.duration_seconds && (
                       <span>{formatDuration(entry.duration_seconds)}</span>
                     )}
@@ -164,7 +164,7 @@ export function CallLog({ leadId, entries, onAdded }: CallLogProps) {
                   </div>
                 </div>
                 {entry.notes && (
-                  <p className="text-xs text-text-secondary leading-relaxed pl-0.5">
+                  <p className="text-xs text-stone leading-relaxed pl-0.5">
                     {entry.notes}
                   </p>
                 )}
@@ -175,7 +175,7 @@ export function CallLog({ leadId, entries, onAdded }: CallLogProps) {
       )}
 
       {entries.length === 0 && (
-        <p className="text-xs text-text-muted text-center py-4">No calls logged yet.</p>
+        <p className="text-xs text-rubble text-center py-4">No calls logged yet.</p>
       )}
     </div>
   );

@@ -169,7 +169,7 @@ export function KanbanBoard() {
   if (error) {
     return (
       <div className="flex items-center justify-center flex-1 min-h-[300px]">
-        <p className="text-sm text-red-400">
+        <p className="text-sm text-red-600">
           Failed to load pipeline data. Please refresh the page.
         </p>
       </div>

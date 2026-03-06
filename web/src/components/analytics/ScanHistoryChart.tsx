@@ -45,17 +45,17 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   return (
     <div
       style={{
-        backgroundColor: '#18181b',
-        border: '1px solid #3f3f46',
+        backgroundColor: '#1A1A18',
+        border: '1px solid #1A1A18',
         borderRadius: '8px',
         padding: '8px 12px',
-        color: '#fafafa',
+        color: '#EDE9E1',
         fontSize: '13px',
       }}
     >
-      <p style={{ color: '#a1a1aa', marginBottom: 6, fontSize: 11 }}>{label}</p>
+      <p style={{ color: '#6B6560', marginBottom: 6, fontSize: 11 }}>{label}</p>
       {found && (
-        <p style={{ color: '#6366f1', fontWeight: 600, marginBottom: 2 }}>
+        <p style={{ color: '#C4411A', fontWeight: 600, marginBottom: 2 }}>
           {found.value.toLocaleString('en-US')} leads found
         </p>
       )}
@@ -91,7 +91,7 @@ export function ScanHistoryChart({ scans }: ScanHistoryChartProps) {
     <Card title="Scan History">
       <div style={{ height: 260 }}>
         {completed.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-sm text-text-muted">
+          <div className="flex items-center justify-center h-full text-sm text-rubble">
             No completed scans yet
           </div>
         ) : (
@@ -102,8 +102,8 @@ export function ScanHistoryChart({ scans }: ScanHistoryChartProps) {
             >
               <defs>
                 <linearGradient id="gradTotal" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%"  stopColor="#6366f1" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#6366f1" stopOpacity={0.02} />
+                  <stop offset="5%"  stopColor="#C4411A" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#C4411A" stopOpacity={0.02} />
                 </linearGradient>
                 <linearGradient id="gradHot" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%"  stopColor="#ef4444" stopOpacity={0.25} />
@@ -112,17 +112,17 @@ export function ScanHistoryChart({ scans }: ScanHistoryChartProps) {
               </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#27272a"
+                stroke="rgba(26,26,24,0.12)"
                 vertical={false}
               />
               <XAxis
                 dataKey="date"
-                tick={{ fill: '#71717a', fontSize: 11 }}
-                axisLine={{ stroke: '#27272a' }}
+                tick={{ fill: '#9C9389', fontSize: 11 }}
+                axisLine={{ stroke: 'rgba(26,26,24,0.12)' }}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: '#71717a', fontSize: 11 }}
+                tick={{ fill: '#9C9389', fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 width={36}
@@ -131,11 +131,11 @@ export function ScanHistoryChart({ scans }: ScanHistoryChartProps) {
               <Area
                 type="monotone"
                 dataKey="total_found"
-                stroke="#6366f1"
+                stroke="#C4411A"
                 strokeWidth={2}
                 fill="url(#gradTotal)"
                 dot={false}
-                activeDot={{ r: 4, fill: '#6366f1', strokeWidth: 0 }}
+                activeDot={{ r: 4, fill: '#C4411A', strokeWidth: 0 }}
               />
               <Area
                 type="monotone"
@@ -156,9 +156,9 @@ export function ScanHistoryChart({ scans }: ScanHistoryChartProps) {
         <div className="flex items-center gap-1.5">
           <div
             className="h-0.5 w-5 rounded-full"
-            style={{ backgroundColor: '#6366f1' }}
+            style={{ backgroundColor: '#C4411A' }}
           />
-          <span className="text-xs text-text-muted">Total found</span>
+          <span className="text-xs text-rubble">Total found</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div
@@ -169,7 +169,7 @@ export function ScanHistoryChart({ scans }: ScanHistoryChartProps) {
                 'repeating-linear-gradient(90deg, #ef4444 0 4px, transparent 4px 6px)',
             }}
           />
-          <span className="text-xs text-text-muted">Hot leads</span>
+          <span className="text-xs text-rubble">Hot leads</span>
         </div>
       </div>
     </Card>

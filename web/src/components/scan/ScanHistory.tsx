@@ -59,7 +59,7 @@ export function ScanHistory() {
 
   if (error) {
     return (
-      <p className="text-xs text-text-muted py-4 text-center">
+      <p className="text-xs text-rubble py-4 text-center">
         Could not load scan history.
       </p>
     );
@@ -67,7 +67,7 @@ export function ScanHistory() {
 
   if (scans.length === 0) {
     return (
-      <p className="text-xs text-text-muted py-4 text-center">
+      <p className="text-xs text-rubble py-4 text-center">
         No scans yet. Start your first scan to see history here.
       </p>
     );
@@ -79,21 +79,21 @@ export function ScanHistory() {
         <div
           key={scan.id}
           className={cn(
-            'rounded-[8px] border border-border-subtle bg-surface-card p-3 flex flex-col gap-2',
+            'rounded-[8px] border border-ink/10 bg-cream-dark p-3 flex flex-col gap-2',
             scan.status === 'running' && 'border-amber-500/30 bg-amber-500/5'
           )}
         >
           {/* Header row: status + date */}
           <div className="flex items-center justify-between gap-2">
             <StatusPill status={scan.status} />
-            <span className="text-[11px] text-text-muted">
+            <span className="text-[11px] text-rubble">
               {formatDate(scan.created_at)}
             </span>
           </div>
 
           {/* Trades */}
           {scan.trades && (
-            <p className="text-xs text-text-secondary capitalize leading-relaxed line-clamp-2">
+            <p className="text-xs text-stone capitalize leading-relaxed line-clamp-2">
               {scan.trades.split(',').map((t) => t.trim()).join(', ')}
             </p>
           )}
@@ -101,17 +101,17 @@ export function ScanHistory() {
           {/* Stats row */}
           {scan.status === 'completed' && (
             <div className="flex items-center gap-3 pt-0.5">
-              <span className="text-[11px] text-text-muted">
-                <span className="font-mono font-semibold text-text-secondary">{scan.total_found}</span>
+              <span className="text-[11px] text-rubble">
+                <span className="font-display font-semibold text-stone">{scan.total_found}</span>
                 {' '}found
               </span>
-              <span className="text-[11px] text-text-muted">
-                <span className="font-mono font-semibold text-green-400">{scan.new_inserted}</span>
+              <span className="text-[11px] text-rubble">
+                <span className="font-display font-semibold text-green-700">{scan.new_inserted}</span>
                 {' '}new
               </span>
               {scan.hot_count > 0 && (
-                <span className="text-[11px] text-text-muted">
-                  <span className="font-mono font-semibold text-red-400">{scan.hot_count}</span>
+                <span className="text-[11px] text-rubble">
+                  <span className="font-display font-semibold text-red-600">{scan.hot_count}</span>
                   {' '}hot
                 </span>
               )}
@@ -120,7 +120,7 @@ export function ScanHistory() {
 
           {/* Error message */}
           {scan.status === 'failed' && scan.error_message && (
-            <p className="text-[11px] text-red-400 line-clamp-2 font-mono">
+            <p className="text-[11px] text-red-600 line-clamp-2 font-display">
               {scan.error_message}
             </p>
           )}

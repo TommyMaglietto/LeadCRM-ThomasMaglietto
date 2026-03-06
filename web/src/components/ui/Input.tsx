@@ -27,25 +27,25 @@ export function Input({
       {label && (
         <label
           htmlFor={inputId}
-          className="text-xs font-medium text-text-secondary"
+          className="text-xs font-medium text-stone uppercase tracking-wider"
         >
           {label}
         </label>
       )}
       <div className="relative">
         {leadingIcon && (
-          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 text-text-muted">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 text-rubble">
             {leadingIcon}
           </div>
         )}
         <input
           id={inputId}
           className={cn(
-            'h-8 w-full rounded-[6px] border bg-surface-input px-3 text-sm text-text-primary placeholder:text-text-muted',
-            'border-border transition-colors duration-150 outline-none',
-            'focus:border-border-focus focus:ring-1 focus:ring-border-focus',
+            'h-8 w-full rounded-[8px] border bg-cream px-3 text-sm text-ink placeholder:text-rubble',
+            'border-ink transition-colors duration-150 outline-none',
+            'focus:border-accent focus:ring-1 focus:ring-accent',
             'disabled:opacity-40 disabled:cursor-not-allowed',
-            error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
+            error && 'border-red-600 focus:border-red-600 focus:ring-red-600',
             leadingIcon && 'pl-8',
             trailingIcon && 'pr-8',
             className
@@ -53,13 +53,13 @@ export function Input({
           {...props}
         />
         {trailingIcon && (
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-text-muted">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-rubble">
             {trailingIcon}
           </div>
         )}
       </div>
-      {error && <p className="text-xs text-red-400">{error}</p>}
-      {hint && !error && <p className="text-xs text-text-muted">{hint}</p>}
+      {error && <p className="text-xs text-red-600">{error}</p>}
+      {hint && !error && <p className="text-xs text-rubble">{hint}</p>}
     </div>
   );
 }

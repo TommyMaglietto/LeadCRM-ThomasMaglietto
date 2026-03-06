@@ -23,11 +23,11 @@ function DefaultIcon() {
       height="40"
       viewBox="0 0 40 40"
       fill="none"
-      className="text-text-muted"
+      className="text-rubble"
     >
       <rect x="6" y="10" width="28" height="22" rx="2" stroke="currentColor" strokeWidth="1.5" />
       <path d="M13 18h14M13 24h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="30" cy="10" r="6" fill="#18181b" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="30" cy="10" r="6" fill="#EDE9E1" stroke="currentColor" strokeWidth="1.5" />
       <path d="M28 10h4M30 8v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
@@ -41,11 +41,11 @@ export function EmptyState({ title, description, action, icon, className }: Empt
         className
       )}
     >
-      <div className="text-text-muted">{icon ?? <DefaultIcon />}</div>
+      <div className="text-rubble">{icon ?? <DefaultIcon />}</div>
       <div className="flex flex-col gap-1">
-        <p className="text-sm font-medium text-text-secondary">{title}</p>
+        <p className="text-sm font-medium text-stone">{title}</p>
         {description && (
-          <p className="text-xs text-text-muted max-w-xs">{description}</p>
+          <p className="text-xs text-rubble max-w-xs">{description}</p>
         )}
       </div>
       {action && (

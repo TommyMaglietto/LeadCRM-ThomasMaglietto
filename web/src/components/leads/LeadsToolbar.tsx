@@ -24,7 +24,7 @@ function FilterIcon({ active }: { active: boolean }) {
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
       <path
         d="M1.75 3.5h10.5M3.5 7h7M5.25 10.5h3.5"
-        stroke={active ? '#6366f1' : 'currentColor'}
+        stroke={active ? '#C4411A' : 'currentColor'}
         strokeWidth="1.3"
         strokeLinecap="round"
       />
@@ -137,14 +137,14 @@ export function LeadsToolbar({
           value={trade}
           onChange={(e) => onTrade(e.target.value)}
           className={cn(
-            'h-8 appearance-none rounded-[6px] border bg-surface-input pl-3 pr-8 text-sm',
-            'border-border transition-colors outline-none cursor-pointer',
-            'focus:border-border-focus focus:ring-1 focus:ring-border-focus',
-            trade ? 'text-text-primary' : 'text-text-muted'
+            'h-8 appearance-none rounded-[6px] border bg-cream pl-3 pr-8 text-sm',
+            'border-ink transition-colors outline-none cursor-pointer',
+            'focus:border-accent focus:ring-1 focus:ring-accent',
+            trade ? 'text-ink' : 'text-rubble'
           )}
         >
           {tradeOptions.map((opt) => (
-            <option key={opt.value} value={opt.value} className="bg-surface-card text-text-primary">
+            <option key={opt.value} value={opt.value} className="bg-cream text-ink">
               {opt.label}
             </option>
           ))}
@@ -156,14 +156,14 @@ export function LeadsToolbar({
             value={city}
             onChange={(e) => onCity(e.target.value)}
             className={cn(
-              'h-8 appearance-none rounded-[6px] border bg-surface-input pl-3 pr-8 text-sm',
-              'border-border transition-colors outline-none cursor-pointer',
-              'focus:border-border-focus focus:ring-1 focus:ring-border-focus',
-              city ? 'text-text-primary' : 'text-text-muted'
+              'h-8 appearance-none rounded-[6px] border bg-cream pl-3 pr-8 text-sm',
+              'border-ink transition-colors outline-none cursor-pointer',
+              'focus:border-accent focus:ring-1 focus:ring-accent',
+              city ? 'text-ink' : 'text-rubble'
             )}
           >
             {cityOptions.map((opt) => (
-              <option key={opt.value} value={opt.value} className="bg-surface-card text-text-primary">
+              <option key={opt.value} value={opt.value} className="bg-cream text-ink">
                 {opt.label}
               </option>
             ))}
@@ -202,8 +202,8 @@ export function LeadsToolbar({
         <div className="flex-1" />
 
         {/* Lead count */}
-        <span className="text-xs text-text-muted whitespace-nowrap">
-          Showing <span className="text-text-secondary font-medium">{showing.toLocaleString()}</span> of <span className="text-text-secondary font-medium">{total.toLocaleString()}</span> leads
+        <span className="text-xs text-rubble whitespace-nowrap">
+          Showing <span className="text-stone font-medium">{showing.toLocaleString()}</span> of <span className="text-stone font-medium">{total.toLocaleString()}</span> leads
         </span>
 
         {/* Export */}
@@ -232,7 +232,7 @@ export function LeadsToolbar({
       {filterOpen && (
         <div
           ref={filterRef}
-          className="rounded-[8px] border border-border bg-surface-card p-4 shadow-lg"
+          className="rounded-[8px] border border-ink bg-cream-dark p-4 shadow-lg"
         >
           <FilterPanel
             values={filters}

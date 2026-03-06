@@ -167,9 +167,9 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
       {/* Trade picker */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-semibold text-text-primary">
+          <label className="text-sm font-semibold text-ink">
             Trades
-            <span className="ml-1.5 text-xs font-normal text-text-muted">
+            <span className="ml-1.5 text-xs font-normal text-rubble">
               ({selectedTrades.size}/{trades.length} selected)
             </span>
           </label>
@@ -181,11 +181,11 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
             >
               Select all
             </button>
-            <span className="text-text-muted text-xs">|</span>
+            <span className="text-rubble text-xs">|</span>
             <button
               type="button"
               onClick={deselectAll}
-              className="text-xs text-text-secondary hover:text-text-primary transition-colors font-medium"
+              className="text-xs text-stone hover:text-ink transition-colors font-medium"
             >
               Deselect all
             </button>
@@ -196,7 +196,7 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
         <div
           className={cn(
             'rounded-[8px] border p-3',
-            errors.trades ? 'border-red-500/50 bg-red-500/5' : 'border-border-subtle bg-surface-card'
+            errors.trades ? 'border-red-500/50 bg-red-500/5' : 'border-ink/10 bg-cream-dark'
           )}
         >
           <div className="grid grid-cols-3 gap-x-4 gap-y-2">
@@ -207,9 +207,9 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
                   key={trade}
                   className={cn(
                     'flex items-center gap-2 cursor-pointer rounded-[4px] px-1 py-0.5 -mx-1 -my-0.5',
-                    'transition-colors hover:bg-surface-hover',
+                    'transition-colors hover:bg-ink/[0.03]',
                     'text-xs capitalize',
-                    checked ? 'text-text-primary' : 'text-text-secondary'
+                    checked ? 'text-ink' : 'text-stone'
                   )}
                 >
                   <span
@@ -218,7 +218,7 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
                       'flex items-center justify-center',
                       checked
                         ? 'bg-accent border-accent'
-                        : 'border-border bg-surface-input'
+                        : 'border-ink bg-cream'
                     )}
                     aria-hidden="true"
                   >
@@ -249,17 +249,17 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
         </div>
 
         {errors.trades && (
-          <p className="text-xs text-red-400">{errors.trades}</p>
+          <p className="text-xs text-red-600">{errors.trades}</p>
         )}
       </div>
 
       {/* Town input */}
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-semibold text-text-primary">
+          <label className="text-sm font-semibold text-ink">
             Towns
           </label>
-          <p className="text-xs text-text-muted">
+          <p className="text-xs text-rubble">
             Type to search cities. Select from suggestions or paste comma-separated names.
           </p>
         </div>
@@ -294,14 +294,14 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
 
       {/* Options */}
       <div className="flex flex-col gap-3">
-        <label className="text-sm font-semibold text-text-primary">Options</label>
+        <label className="text-sm font-semibold text-ink">Options</label>
         <label className="flex items-center gap-3 cursor-pointer group">
           <span
             className={cn(
               'w-3.5 h-3.5 rounded-[3px] border flex items-center justify-center shrink-0 transition-all duration-100',
               refresh
                 ? 'bg-accent border-accent'
-                : 'border-border bg-surface-input group-hover:border-border-DEFAULT'
+                : 'border-ink bg-cream group-hover:border-ink'
             )}
             aria-hidden="true"
           >
@@ -323,9 +323,9 @@ export function ScanForm({ onSubmit, isLoading = false }: ScanFormProps) {
             checked={refresh}
             onChange={(e) => setRefresh(e.target.checked)}
           />
-          <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
+          <span className="text-sm text-stone group-hover:text-ink transition-colors">
             Re-enrich existing leads
-            <span className="ml-1 text-xs text-text-muted">
+            <span className="ml-1 text-xs text-rubble">
               (update previously seen businesses)
             </span>
           </span>

@@ -32,23 +32,23 @@ function Pagination({ page, totalPages, total, limit, onPage, onLimit }: Paginat
   return (
     <div className="flex items-center justify-between py-3">
       <div className="flex items-center gap-3">
-        <span className="text-xs text-text-muted">
+        <span className="text-xs text-rubble">
           {total === 0 ? '0 results' : `${start}–${end} of ${total.toLocaleString()}`}
         </span>
 
         <div className="flex items-center gap-1.5">
-          <label className="text-xs text-text-muted">Rows:</label>
+          <label className="text-xs text-rubble">Rows:</label>
           <select
             value={limit}
             onChange={(e) => onLimit(Number(e.target.value))}
             className={cn(
-              'h-7 appearance-none rounded-[5px] border bg-surface-input px-2 pr-6 text-xs text-text-primary',
-              'border-border outline-none cursor-pointer',
-              'focus:border-border-focus'
+              'h-7 appearance-none rounded-[5px] border bg-cream px-2 pr-6 text-xs text-ink',
+              'border-ink outline-none cursor-pointer',
+              'focus:border-accent'
             )}
           >
             {PAGE_SIZE_OPTIONS.map((size) => (
-              <option key={size} value={size} className="bg-surface-card">
+              <option key={size} value={size} className="bg-cream-dark">
                 {size}
               </option>
             ))}
@@ -71,7 +71,7 @@ function Pagination({ page, totalPages, total, limit, onPage, onLimit }: Paginat
 
         {getPageNumbers(page, totalPages).map((p, i) =>
           p === null ? (
-            <span key={`ellipsis-${i}`} className="px-1 text-text-muted text-xs select-none">…</span>
+            <span key={`ellipsis-${i}`} className="px-1 text-rubble text-xs select-none">…</span>
           ) : (
             <PageButton key={p} onClick={() => onPage(p)} active={p === page}>
               {p}
@@ -110,7 +110,7 @@ function PageButton({ active, children, disabled, className, ...props }: PageBut
         'disabled:opacity-30 disabled:cursor-not-allowed',
         active
           ? 'bg-accent text-white'
-          : 'text-text-secondary hover:bg-surface-hover hover:text-text-primary',
+          : 'text-stone hover:bg-ink/[0.03] hover:text-ink',
         className
       )}
       {...props}
@@ -317,7 +317,7 @@ function LeadsPageInner() {
     <PageShell title="Leads" noPadding>
       <div className="flex flex-col h-full min-h-0">
         {/* Toolbar */}
-        <div className="px-6 py-4 border-b border-border-subtle shrink-0">
+        <div className="px-6 py-4 border-b border-ink/10 shrink-0">
           <LeadsToolbar
             search={search}
             onSearch={handleSearch}
@@ -354,7 +354,7 @@ function LeadsPageInner() {
 
         {/* Pagination */}
         {!isLoading && pagination && pagination.totalPages > 0 && (
-          <div className="px-6 border-t border-border-subtle shrink-0">
+          <div className="px-6 border-t border-ink/10 shrink-0">
             <Pagination
               page={pagination.page}
               totalPages={pagination.totalPages}

@@ -28,17 +28,17 @@ interface StatCardProps {
 
 function StatCard({ label, value, color, muted = false }: StatCardProps) {
   return (
-    <div className="flex flex-col items-center gap-1 p-3 rounded-[8px] border border-border-subtle bg-surface-card">
+    <div className="flex flex-col items-center gap-1 p-3 rounded-[8px] border border-ink/10 bg-cream-dark">
       <span
         className={cn(
-          'text-2xl font-bold font-mono tabular-nums',
-          muted ? 'text-text-muted' : 'text-text-primary'
+          'text-2xl font-bold font-display tabular-nums',
+          muted ? 'text-rubble' : 'text-ink'
         )}
         style={color ? { color } : undefined}
       >
         {value.toLocaleString()}
       </span>
-      <span className="text-[11px] text-text-muted uppercase tracking-wide font-medium">
+      <span className="text-[11px] text-rubble uppercase tracking-wide font-medium">
         {label}
       </span>
     </div>
@@ -64,7 +64,7 @@ function TierRow({ label, count, badgeVariant }: TierRowProps) {
       <Badge variant={badgeVariant} size="sm" className="w-14 justify-center">
         {label}
       </Badge>
-      <div className="flex-1 h-1.5 rounded-full bg-surface-active overflow-hidden">
+      <div className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden">
         <div
           className={cn(
             'h-full rounded-full transition-all duration-500',
@@ -76,7 +76,7 @@ function TierRow({ label, count, badgeVariant }: TierRowProps) {
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="font-mono text-sm font-semibold text-text-primary w-8 text-right tabular-nums">
+      <span className="font-display text-sm font-semibold text-ink w-8 text-right tabular-nums">
         {count}
       </span>
     </div>
@@ -115,11 +115,11 @@ export function ScanResults({ scan, onRunAnother }: ScanResultsProps) {
           )}
         </div>
         <div>
-          <p className={cn('text-sm font-semibold', didFail ? 'text-red-400' : 'text-green-400')}>
+          <p className={cn('text-sm font-semibold', didFail ? 'text-red-600' : 'text-green-700')}>
             {didFail ? 'Scan failed' : 'Scan completed'}
           </p>
           {scan.completed_at && (
-            <p className="text-xs text-text-muted">
+            <p className="text-xs text-rubble">
               {new Date(scan.completed_at).toLocaleString()}
             </p>
           )}
@@ -129,8 +129,8 @@ export function ScanResults({ scan, onRunAnother }: ScanResultsProps) {
       {/* Error message */}
       {didFail && scan.error_message && (
         <div className="rounded-[8px] border border-red-500/30 bg-red-500/5 px-4 py-3">
-          <p className="text-xs text-text-muted font-medium mb-1">Error details</p>
-          <p className="text-xs text-red-300 font-mono leading-relaxed break-all">
+          <p className="text-xs text-rubble font-medium mb-1">Error details</p>
+          <p className="text-xs text-red-300 font-display leading-relaxed break-all">
             {scan.error_message}
           </p>
         </div>
@@ -140,18 +140,18 @@ export function ScanResults({ scan, onRunAnother }: ScanResultsProps) {
       {!didFail && (
         <>
           <div className="grid grid-cols-3 gap-2">
-            <StatCard label="Found" value={total} color="#fafafa" />
+            <StatCard label="Found" value={total} color="#1A1A18" />
             <StatCard label="New" value={scan.new_inserted} color="#22c55e" />
-            <StatCard label="Updated" value={scan.updated} color="#6366f1" />
+            <StatCard label="Updated" value={scan.updated} color="#C4411A" />
           </div>
 
           {/* Tier breakdown */}
           {tierTotal > 0 && (
             <div className="flex flex-col gap-2">
-              <p className="text-xs text-text-muted font-medium uppercase tracking-wide">
+              <p className="text-xs text-rubble font-medium uppercase tracking-wide">
                 Tier Breakdown
               </p>
-              <div className="rounded-[8px] border border-border-subtle bg-surface-card p-4 flex flex-col gap-3">
+              <div className="rounded-[8px] border border-ink/10 bg-cream-dark p-4 flex flex-col gap-3">
                 <TierRow label="Hot"  count={scan.hot_count}  badgeVariant="success" />
                 <TierRow label="Warm" count={scan.warm_count} badgeVariant="warning" />
                 <TierRow label="Cold" count={scan.cold_count} badgeVariant="info" />
@@ -161,23 +161,23 @@ export function ScanResults({ scan, onRunAnother }: ScanResultsProps) {
           )}
 
           {/* Scan metadata */}
-          <div className="rounded-[8px] border border-border-subtle bg-surface-card px-4 py-3 flex flex-col gap-2">
-            <p className="text-[11px] text-text-muted uppercase tracking-wide font-medium">
+          <div className="rounded-[8px] border border-ink/10 bg-cream-dark px-4 py-3 flex flex-col gap-2">
+            <p className="text-[11px] text-rubble uppercase tracking-wide font-medium">
               Scan details
             </p>
             <div className="flex flex-col gap-1.5">
               {scan.trades && (
                 <div className="flex gap-2">
-                  <span className="text-xs text-text-muted w-14 shrink-0">Trades</span>
-                  <span className="text-xs text-text-secondary capitalize leading-relaxed">
+                  <span className="text-xs text-rubble w-14 shrink-0">Trades</span>
+                  <span className="text-xs text-stone capitalize leading-relaxed">
                     {scan.trades.split(',').join(', ')}
                   </span>
                 </div>
               )}
               {scan.towns && (
                 <div className="flex gap-2">
-                  <span className="text-xs text-text-muted w-14 shrink-0">Towns</span>
-                  <span className="text-xs text-text-secondary leading-relaxed">
+                  <span className="text-xs text-rubble w-14 shrink-0">Towns</span>
+                  <span className="text-xs text-stone leading-relaxed">
                     {scan.towns.split(',').join(', ')}
                   </span>
                 </div>

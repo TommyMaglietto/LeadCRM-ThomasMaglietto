@@ -9,7 +9,6 @@ interface PageShellProps {
   breadcrumb?: string;
   children: React.ReactNode;
   className?: string;
-  /** Remove default padding (useful for full-bleed layouts) */
   noPadding?: boolean;
 }
 
@@ -26,7 +25,7 @@ export function PageShell({
       <Header title={title} actions={actions} breadcrumb={breadcrumb} />
       <main
         className={cn(
-          'flex-1 overflow-y-auto',
+          'flex-1 overflow-y-auto bg-cream',
           !noPadding && 'p-6',
           className
         )}

@@ -9,21 +9,17 @@ import { WebsiteStatusChart } from './WebsiteStatusChart';
 import { OutreachFunnel } from './OutreachFunnel';
 import { RecentScans } from './RecentScans';
 
-// ---------------------------------------------------------------------------
-// Inline skeleton component — avoids a separate file for a simple pattern
-// ---------------------------------------------------------------------------
+// --- Skeleton -------------------------------------------------------------
 
 function SkeletonBlock({ className }: { className?: string }) {
   return (
     <div
-      className={`rounded-[8px] border border-border-subtle bg-surface-card animate-pulse ${className ?? ''}`}
+      className={`rounded-card border border-ink bg-cream-dark animate-pulse shadow-card ${className ?? ''}`}
     />
   );
 }
 
-// ---------------------------------------------------------------------------
-// Top cities mini-chart (local, dashboard-only widget)
-// ---------------------------------------------------------------------------
+// --- Top cities mini-chart ------------------------------------------------
 
 function TopCitiesCard({
   byCity,
@@ -34,35 +30,35 @@ function TopCitiesCard({
   const maxCount = Math.max(...top.map((c) => c.count), 1);
 
   return (
-    <div className="rounded-[8px] border border-border-subtle bg-surface-card">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border-subtle">
-        <h3 className="text-sm font-semibold text-text-primary">Top Cities</h3>
-        <span className="text-xs text-text-muted">{byCity.length} cities</span>
+    <div className="rounded-card border border-ink bg-cream-dark shadow-card">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-ink/15">
+        <h3 className="font-display text-lg tracking-wide text-ink uppercase">Top Cities</h3>
+        <span className="text-xs text-rubble">{byCity.length} cities</span>
       </div>
       <div className="p-4">
         {top.length === 0 ? (
-          <p className="py-8 text-sm text-center text-text-muted">No data yet</p>
+          <p className="py-8 text-sm text-center text-rubble">No data yet</p>
         ) : (
           <div className="flex flex-col gap-2.5">
             {top.map((item) => (
               <div key={item.city} className="flex items-center gap-3">
                 <span
-                  className="text-xs text-text-secondary truncate shrink-0"
+                  className="text-xs text-stone truncate shrink-0"
                   style={{ width: 90 }}
                 >
                   {item.city}
                 </span>
-                <div className="flex-1 h-1.5 rounded-full bg-surface-active overflow-hidden">
+                <div className="flex-1 h-1.5 rounded-full bg-ink/8 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{
                       width: `${Math.round((item.count / maxCount) * 100)}%`,
-                      backgroundColor: '#6366f1',
+                      backgroundColor: '#C4411A',
                       opacity: 0.75,
                     }}
                   />
                 </div>
-                <span className="text-xs font-mono text-text-muted tabular-nums w-8 text-right">
+                <span className="text-xs font-display text-rubble tabular-nums w-8 text-right">
                   {item.count}
                 </span>
               </div>
@@ -74,44 +70,33 @@ function TopCitiesCard({
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main client component
-// ---------------------------------------------------------------------------
+// --- Main client component ------------------------------------------------
 
 export function DashboardContent() {
   const { stats, isLoading, isError, mutate } = useStats();
 
-  // -------------------------------------------------------------------------
-  // Loading state
-  // -------------------------------------------------------------------------
   if (isLoading) {
     return (
       <div className="flex flex-col gap-6">
-        {/* KPI row */}
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <SkeletonBlock key={i} className="h-28" />
           ))}
         </div>
-        {/* Charts 2-col */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {Array.from({ length: 4 }).map((_, i) => (
             <SkeletonBlock key={i} className="h-[316px]" />
           ))}
         </div>
-        {/* Scans table */}
         <SkeletonBlock className="h-64" />
       </div>
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Error state
-  // -------------------------------------------------------------------------
   if (isError || !stats) {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
-        <div className="text-text-muted">
+        <div className="text-rubble">
           <svg
             width="40"
             height="40"
@@ -126,7 +111,7 @@ export function DashboardContent() {
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
         </div>
-        <p className="text-sm text-text-secondary">
+        <p className="text-sm text-stone">
           Failed to load dashboard stats.
         </p>
         <Button variant="secondary" size="sm" onClick={mutate}>
@@ -136,9 +121,6 @@ export function DashboardContent() {
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Loaded state
-  // -------------------------------------------------------------------------
   return (
     <div className="flex flex-col gap-6">
       {/* Refresh button row */}
@@ -168,10 +150,8 @@ export function DashboardContent() {
         </Button>
       </div>
 
-      {/* Top-level KPI cards */}
       <StatsGrid stats={stats} />
 
-      {/* 2-column charts grid */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <TierDistribution byTier={stats.byTier} />
         <OutreachFunnel byOutreachStatus={stats.byOutreachStatus} />
@@ -179,7 +159,6 @@ export function DashboardContent() {
         <TopCitiesCard byCity={stats.byCity} />
       </div>
 
-      {/* Recent scans table */}
       <RecentScans scans={stats.recentScans} />
     </div>
   );

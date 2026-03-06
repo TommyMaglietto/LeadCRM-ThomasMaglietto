@@ -13,35 +13,33 @@ interface StatCardProps {
 
 function StatCard({ label, value, accent, icon, sublabel }: StatCardProps) {
   return (
-    <div className="rounded-[8px] border border-border-subtle bg-surface-card p-5 flex flex-col gap-3">
+    <div className="rounded-card border border-ink bg-cream-dark p-5 flex flex-col gap-3 shadow-card">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-text-secondary uppercase tracking-wider">
+        <span className="text-xs font-medium text-rubble uppercase tracking-wider">
           {label}
         </span>
         {icon && (
-          <span className="text-text-muted">{icon}</span>
+          <span className="text-stone">{icon}</span>
         )}
       </div>
       <div className="flex items-end gap-2">
         <span
           className={cn(
-            'text-3xl font-mono font-semibold leading-none tabular-nums',
-            accent ?? 'text-text-primary'
+            'font-display text-4xl leading-none tabular-nums',
+            accent ?? 'text-ink'
           )}
         >
           {typeof value === 'number' ? value.toLocaleString('en-US') : value}
         </span>
       </div>
       {sublabel && (
-        <span className="text-xs text-text-muted">{sublabel}</span>
+        <span className="text-xs text-rubble">{sublabel}</span>
       )}
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Icons (inline SVG — no external icon lib dependency)
-// ---------------------------------------------------------------------------
+// --- Icons ----------------------------------------------------------------
 
 function FireIcon() {
   return (
@@ -50,7 +48,7 @@ function FireIcon() {
       height="18"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#ef4444"
+      stroke="#C4411A"
       strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -68,7 +66,7 @@ function UsersIcon() {
       height="18"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#a1a1aa"
+      stroke="#6B6560"
       strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -88,7 +86,7 @@ function PhoneIcon() {
       height="18"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#a1a1aa"
+      stroke="#6B6560"
       strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -106,7 +104,7 @@ function ScanIcon() {
       height="18"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#a1a1aa"
+      stroke="#6B6560"
       strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -117,16 +115,13 @@ function ScanIcon() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
+// --- Main component -------------------------------------------------------
 
 interface StatsGridProps {
   stats: DashboardStats;
 }
 
 export function StatsGrid({ stats }: StatsGridProps) {
-  // "Contacted" = any outreach_status that is not 'new'
   const contacted = Object.entries(stats.byOutreachStatus)
     .filter(([key]) => key !== 'new')
     .reduce((sum, [, count]) => sum + count, 0);
@@ -144,7 +139,7 @@ export function StatsGrid({ stats }: StatsGridProps) {
       <StatCard
         label="Hot Leads"
         value={stats.byTier.hot}
-        accent="text-red-400"
+        accent="text-accent"
         icon={<FireIcon />}
         sublabel="Score 12+ or manually flagged"
       />

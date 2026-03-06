@@ -36,13 +36,13 @@ function TradePills({ trades }: { trades: string | null }) {
       {visible.map((trade) => (
         <span
           key={trade}
-          className="inline-flex items-center px-1.5 py-0.5 rounded-[3px] text-[10px] font-medium leading-none bg-surface-active text-text-secondary capitalize"
+          className="inline-flex items-center px-1.5 py-0.5 rounded-[3px] text-[10px] font-medium leading-none bg-ink/10 text-stone capitalize"
         >
           {trade}
         </span>
       ))}
       {overflow > 0 && (
-        <span className="text-[10px] text-text-muted font-medium">
+        <span className="text-[10px] text-rubble font-medium">
           +{overflow}
         </span>
       )}
@@ -57,7 +57,7 @@ function TradePills({ trades }: { trades: string | null }) {
 function scoreColor(score: number): string {
   if (score >= 70) return '#22c55e';
   if (score >= 40) return '#f59e0b';
-  return '#71717a';
+  return '#9C9389';
 }
 
 // ---------------------------------------------------------------------------
@@ -92,28 +92,28 @@ export function KanbanCard({ lead, onClick }: KanbanCardProps) {
       aria-label={`Lead card for ${lead.name}`}
       className={cn(
         // Base card styles
-        'relative w-full rounded-[6px] border border-border-subtle bg-surface-card p-2.5',
+        'relative w-full rounded-[6px] border border-ink/10 bg-cream-dark p-2.5',
         'flex flex-col gap-1.5 cursor-grab select-none',
         'transition-all duration-150',
         // Hover glow
-        'hover:border-border hover:shadow-[0_0_0_1px_rgba(99,102,241,0.15),0_2px_8px_rgba(0,0,0,0.4)]',
+        'hover:border-ink hover:shadow-card-sm',
         // Active drag
         isDragging && [
-          'opacity-50 cursor-grabbing z-50 shadow-2xl',
-          'border-accent/50 shadow-[0_0_0_1px_rgba(99,102,241,0.4),0_8px_24px_rgba(0,0,0,0.6)]',
+          'opacity-50 cursor-grabbing z-50 shadow-card',
+          'border-accent',
         ]
       )}
     >
       {/* Row 1: Business name + score */}
       <div className="flex items-start justify-between gap-2">
         <p
-          className="text-sm font-semibold text-text-primary leading-tight truncate flex-1 min-w-0"
+          className="text-sm font-semibold text-ink leading-tight truncate flex-1 min-w-0"
           title={lead.name}
         >
           {lead.name}
         </p>
         <span
-          className="font-mono text-[11px] font-medium shrink-0 tabular-nums"
+          className="font-display text-[11px] font-medium shrink-0 tabular-nums"
           style={{ color: scoreColor(lead.lead_score) }}
         >
           {lead.lead_score}
@@ -127,7 +127,7 @@ export function KanbanCard({ lead, onClick }: KanbanCardProps) {
       <div className="flex items-center justify-between gap-2">
         <TierBadge tier={lead.lead_tier} size="sm" />
         {lead.city && (
-          <span className="text-[10px] text-text-muted truncate max-w-[80px]" title={lead.city ?? ''}>
+          <span className="text-[10px] text-rubble truncate max-w-[80px]" title={lead.city ?? ''}>
             {lead.city}
           </span>
         )}
@@ -135,7 +135,7 @@ export function KanbanCard({ lead, onClick }: KanbanCardProps) {
 
       {/* Row 4: Phone */}
       {lead.phone && (
-        <p className="text-[10px] text-text-muted font-mono leading-none">
+        <p className="text-[10px] text-rubble font-display leading-none">
           {formatPhone(lead.phone)}
         </p>
       )}

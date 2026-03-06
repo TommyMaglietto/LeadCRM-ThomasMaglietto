@@ -19,8 +19,8 @@ function ExternalLinkIcon() {
 
 function StarIcon({ filled }: { filled: boolean }) {
   return (
-    <svg width="10" height="10" viewBox="0 0 10 10" fill={filled ? '#f59e0b' : 'none'} className="shrink-0">
-      <path d="M5 1l1.12 2.5 2.63.25-1.9 1.72.55 2.63L5 6.75 2.6 8.1l.55-2.63L1.25 3.75l2.63-.25L5 1z" stroke="#f59e0b" strokeWidth="0.8" strokeLinejoin="round" />
+    <svg width="10" height="10" viewBox="0 0 10 10" fill={filled ? '#B8860B' : 'none'} className="shrink-0">
+      <path d="M5 1l1.12 2.5 2.63.25-1.9 1.72.55 2.63L5 6.75 2.6 8.1l.55-2.63L1.25 3.75l2.63-.25L5 1z" stroke="#B8860B" strokeWidth="0.8" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -70,25 +70,25 @@ function InlineOutreach({ leadId, current, onSaved }: InlineOutreachProps) {
           'h-6 appearance-none rounded-[4px] pl-2 pr-6 text-[11px] font-medium',
           'border border-transparent cursor-pointer outline-none transition-colors',
           'disabled:opacity-60',
-          'focus:ring-1 focus:ring-border-focus'
+          'focus:ring-1 focus:ring-accent'
         )}
         style={{
-          backgroundColor: colorConfig?.bgColor ?? '#27272a',
-          color:           colorConfig?.textColor ?? '#a1a1aa',
+          backgroundColor: colorConfig?.bgColor ?? 'rgba(26,26,24,0.10)',
+          color:           colorConfig?.textColor ?? '#6B6560',
         }}
       >
         {OUTREACH_STATUSES.map((s) => (
           <option
             key={s.value}
             value={s.value}
-            className="bg-surface-card text-text-primary"
+            className="bg-cream text-ink"
           >
             {s.label}
           </option>
         ))}
       </select>
       {/* Chevron */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5" style={{ color: colorConfig?.textColor ?? '#a1a1aa' }}>
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5" style={{ color: colorConfig?.textColor ?? '#6B6560' }}>
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
           <path d="M2.5 3.75l2.5 2.5 2.5-2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -100,7 +100,7 @@ function InlineOutreach({ leadId, current, onSaved }: InlineOutreachProps) {
 // ─── Star Rating Row ──────────────────────────────────────────────────────────
 
 function MiniStars({ rating, count }: { rating: number | null; count: number | null }) {
-  if (rating === null) return <span className="text-text-muted">—</span>;
+  if (rating === null) return <span className="text-rubble">—</span>;
   const filled = Math.round(rating);
   return (
     <div className="flex items-center gap-1">
@@ -109,7 +109,7 @@ function MiniStars({ rating, count }: { rating: number | null; count: number | n
           <StarIcon key={i} filled={i < filled} />
         ))}
       </span>
-      <span className="text-[11px] text-text-muted">
+      <span className="text-[11px] text-rubble">
         {formatRating(rating)}
         {count !== null && ` (${formatCount(count)})`}
       </span>
@@ -133,17 +133,17 @@ export function LeadRow({ lead, selected, onSelect, onClick, onStatusSaved }: Le
     : [];
 
   const scoreColor =
-    lead.lead_score > 60 ? 'text-green-400' :
-    lead.lead_score > 30 ? 'text-amber-400' :
-    lead.lead_score < 0  ? 'text-red-400'   :
-    'text-text-secondary';
+    lead.lead_score > 60 ? 'text-green-700' :
+    lead.lead_score > 30 ? 'text-amber-700' :
+    lead.lead_score < 0  ? 'text-red-600'   :
+    'text-stone';
 
   return (
     <tr
       onClick={() => onClick(lead)}
       className={cn(
-        'border-b border-border-subtle transition-colors duration-75 cursor-pointer group',
-        selected ? 'bg-accent/5' : 'hover:bg-surface-hover'
+        'border-b border-ink/10 transition-colors duration-75 cursor-pointer group',
+        selected ? 'bg-accent/5' : 'hover:bg-ink/[0.03]'
       )}
       style={{ height: '44px' }}
     >
@@ -153,7 +153,7 @@ export function LeadRow({ lead, selected, onSelect, onClick, onStatusSaved }: Le
           type="checkbox"
           checked={selected}
           onChange={(e) => onSelect(lead.id, e.target.checked)}
-          className="h-3.5 w-3.5 rounded-sm border-border accent-accent cursor-pointer"
+          className="h-3.5 w-3.5 rounded-sm border-ink accent-accent cursor-pointer"
           aria-label={`Select ${lead.name}`}
         />
       </td>
@@ -161,11 +161,11 @@ export function LeadRow({ lead, selected, onSelect, onClick, onStatusSaved }: Le
       {/* Name + Address */}
       <td className="px-3 py-0 align-middle min-w-[180px] max-w-[240px]">
         <div className="flex flex-col leading-tight">
-          <span className="text-sm font-medium text-text-primary truncate group-hover:text-accent transition-colors">
+          <span className="text-sm font-medium text-ink truncate group-hover:text-accent transition-colors">
             {lead.name}
           </span>
           {lead.address && (
-            <span className="text-[11px] text-text-muted truncate">{lead.address}</span>
+            <span className="text-[11px] text-rubble truncate">{lead.address}</span>
           )}
         </div>
       </td>
@@ -175,18 +175,18 @@ export function LeadRow({ lead, selected, onSelect, onClick, onStatusSaved }: Le
         {lead.phone ? (
           <a
             href={`tel:${lead.phone}`}
-            className="text-sm text-text-secondary hover:text-accent transition-colors font-mono whitespace-nowrap"
+            className="text-sm text-stone hover:text-accent transition-colors font-display whitespace-nowrap"
           >
             {formatPhone(lead.phone)}
           </a>
         ) : (
-          <span className="text-text-muted">—</span>
+          <span className="text-rubble">—</span>
         )}
       </td>
 
       {/* City */}
       <td className="px-3 py-0 align-middle w-28">
-        <span className="text-sm text-text-secondary truncate">{lead.city ?? '—'}</span>
+        <span className="text-sm text-stone truncate">{lead.city ?? '—'}</span>
       </td>
 
       {/* Trades */}
@@ -195,20 +195,20 @@ export function LeadRow({ lead, selected, onSelect, onClick, onStatusSaved }: Le
           {trades.slice(0, 2).map((t) => (
             <span
               key={t}
-              className="px-1.5 py-0.5 rounded-[3px] text-[10px] font-medium bg-surface-active text-text-muted whitespace-nowrap"
+              className="px-1.5 py-0.5 rounded-[3px] text-[10px] font-medium bg-ink/10 text-rubble whitespace-nowrap"
             >
               {t}
             </span>
           ))}
           {trades.length > 2 && (
-            <span className="text-[10px] text-text-muted">+{trades.length - 2}</span>
+            <span className="text-[10px] text-rubble">+{trades.length - 2}</span>
           )}
         </div>
       </td>
 
       {/* Score */}
       <td className="px-3 py-0 align-middle w-16 text-right">
-        <span className={cn('text-sm font-semibold font-mono tabular-nums', scoreColor)}>
+        <span className={cn('text-sm font-semibold font-display tabular-nums', scoreColor)}>
           {formatScore(lead.lead_score)}
         </span>
       </td>
@@ -227,7 +227,7 @@ export function LeadRow({ lead, selected, onSelect, onClick, onStatusSaved }: Le
               href={lead.website_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-muted hover:text-accent transition-colors"
+              className="text-rubble hover:text-accent transition-colors"
               aria-label={`Visit ${lead.name} website`}
             >
               <ExternalLinkIcon />
@@ -253,11 +253,11 @@ export function LeadRow({ lead, selected, onSelect, onClick, onStatusSaved }: Le
       {/* Yelp */}
       <td className="px-3 py-0 align-middle w-12 text-center">
         {lead.has_yelp === 'true' ? (
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="mx-auto text-green-400">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="mx-auto text-green-700">
             <path d="M2.5 7l3 3 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         ) : (
-          <span className="text-text-muted text-sm">—</span>
+          <span className="text-rubble text-sm">—</span>
         )}
       </td>
     </tr>

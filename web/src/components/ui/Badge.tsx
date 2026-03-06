@@ -29,13 +29,13 @@ interface BadgeProps {
   className?: string;
 }
 
-const SEMANTIC_STYLES: Record<string, { bgColor: string; textColor: string }> = {
-  success: { bgColor: 'rgba(34, 197, 94, 0.15)', textColor: '#86efac' },
-  error:   { bgColor: 'rgba(239, 68, 68, 0.15)',  textColor: '#fca5a5' },
-  warning: { bgColor: 'rgba(245, 158, 11, 0.15)', textColor: '#fcd34d' },
-  info:    { bgColor: 'rgba(59, 130, 246, 0.15)', textColor: '#93c5fd' },
-  neutral: { bgColor: 'rgba(113, 113, 122, 0.15)', textColor: '#a1a1aa' },
-  default: { bgColor: '#27272a', textColor: '#a1a1aa' },
+const SEMANTIC_STYLES: Record<string, { bgColor: string; textColor: string; borderColor: string }> = {
+  success: { bgColor: 'rgba(34, 120, 60, 0.12)', textColor: '#1a6b35', borderColor: 'rgba(34, 120, 60, 0.3)' },
+  error:   { bgColor: 'rgba(196, 65, 26, 0.12)',  textColor: '#9B2C1A', borderColor: 'rgba(196, 65, 26, 0.3)' },
+  warning: { bgColor: 'rgba(184, 134, 11, 0.12)', textColor: '#7A5B06', borderColor: 'rgba(184, 134, 11, 0.3)' },
+  info:    { bgColor: 'rgba(59, 110, 143, 0.12)', textColor: '#2C5A75', borderColor: 'rgba(59, 110, 143, 0.3)' },
+  neutral: { bgColor: 'rgba(26, 26, 24, 0.06)',   textColor: '#6B6560', borderColor: 'rgba(26, 26, 24, 0.15)' },
+  default: { bgColor: 'rgba(26, 26, 24, 0.06)',   textColor: '#6B6560', borderColor: 'rgba(26, 26, 24, 0.15)' },
 };
 
 export function Badge({
@@ -47,34 +47,39 @@ export function Badge({
   size = 'md',
   className,
 }: BadgeProps) {
-  let bgColor = '#27272a';
-  let textColor = '#a1a1aa';
+  let bgColor = 'rgba(26, 26, 24, 0.06)';
+  let textColor = '#6B6560';
+  let borderColor = 'rgba(26, 26, 24, 0.15)';
 
   if (variant === 'tier' && tier) {
     bgColor = TIER_COLOR_MAP[tier]?.bgColor ?? bgColor;
     textColor = TIER_COLOR_MAP[tier]?.textColor ?? textColor;
+    borderColor = TIER_COLOR_MAP[tier]?.color ?? borderColor;
   } else if (variant === 'outreach' && outreach) {
     bgColor = OUTREACH_COLOR_MAP[outreach]?.bgColor ?? bgColor;
     textColor = OUTREACH_COLOR_MAP[outreach]?.textColor ?? textColor;
+    borderColor = OUTREACH_COLOR_MAP[outreach]?.color ?? borderColor;
   } else if (variant === 'website' && websiteStatus) {
     bgColor = WEBSITE_COLOR_MAP[websiteStatus]?.bgColor ?? bgColor;
     textColor = WEBSITE_COLOR_MAP[websiteStatus]?.textColor ?? textColor;
+    borderColor = WEBSITE_COLOR_MAP[websiteStatus]?.color ?? borderColor;
   } else if (variant in SEMANTIC_STYLES) {
     const style = SEMANTIC_STYLES[variant];
     if (style) {
       bgColor = style.bgColor;
       textColor = style.textColor;
+      borderColor = style.borderColor;
     }
   }
 
   return (
     <span
       className={cn(
-        'inline-flex items-center font-medium rounded-[4px] leading-none whitespace-nowrap',
+        'inline-flex items-center font-medium rounded-[4px] leading-none whitespace-nowrap border',
         size === 'sm' ? 'px-1.5 py-0.5 text-[11px]' : 'px-2 py-1 text-xs',
         className
       )}
-      style={{ backgroundColor: bgColor, color: textColor }}
+      style={{ backgroundColor: bgColor, color: textColor, borderColor: `${borderColor}33` }}
     >
       {children}
     </span>

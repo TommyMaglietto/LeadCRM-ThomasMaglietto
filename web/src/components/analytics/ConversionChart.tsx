@@ -44,21 +44,21 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
   return (
     <div
       style={{
-        backgroundColor: '#18181b',
-        border: '1px solid #3f3f46',
+        backgroundColor: '#1A1A18',
+        border: '1px solid #1A1A18',
         borderRadius: '8px',
         padding: '8px 12px',
-        color: '#fafafa',
+        color: '#EDE9E1',
         fontSize: '13px',
       }}
     >
       <p style={{ color: entry.payload.fill, fontWeight: 600, marginBottom: 2 }}>
         {entry.payload.label}
       </p>
-      <p style={{ color: '#a1a1aa' }}>
+      <p style={{ color: '#6B6560' }}>
         {entry.value}% conversion rate
       </p>
-      <p style={{ color: '#71717a', fontSize: 11, marginTop: 2 }}>
+      <p style={{ color: '#9C9389', fontSize: 11, marginTop: 2 }}>
         {entry.payload.from} → {entry.payload.to}
       </p>
     </div>
@@ -117,7 +117,7 @@ export function ConversionChart({ byOutreachStatus }: ConversionChartProps) {
     <Card title="Conversion Rates">
       <div style={{ height: 260 }}>
         {pairs.every((p) => p.rate === 0) ? (
-          <div className="flex items-center justify-center h-full text-sm text-text-muted">
+          <div className="flex items-center justify-center h-full text-sm text-rubble">
             No outreach data yet
           </div>
         ) : (
@@ -128,15 +128,15 @@ export function ConversionChart({ byOutreachStatus }: ConversionChartProps) {
             >
               <XAxis
                 dataKey="label"
-                tick={{ fill: '#a1a1aa', fontSize: 10 }}
-                axisLine={{ stroke: '#27272a' }}
+                tick={{ fill: '#6B6560', fontSize: 10 }}
+                axisLine={{ stroke: 'rgba(26,26,24,0.12)' }}
                 tickLine={false}
                 angle={-30}
                 textAnchor="end"
                 interval={0}
               />
               <YAxis
-                tick={{ fill: '#71717a', fontSize: 11 }}
+                tick={{ fill: '#9C9389', fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 width={32}
@@ -145,7 +145,7 @@ export function ConversionChart({ byOutreachStatus }: ConversionChartProps) {
               />
               <Tooltip
                 content={<CustomTooltip />}
-                cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                cursor={{ fill: 'rgba(26,26,24,0.04)' }}
               />
               <Bar dataKey="rate" radius={[4, 4, 0, 0]} maxBarSize={48}>
                 {pairs.map((entry, index) => (
@@ -160,9 +160,9 @@ export function ConversionChart({ byOutreachStatus }: ConversionChartProps) {
                   position="top"
                   formatter={(v: number) => `${v}%`}
                   style={{
-                    fill: '#71717a',
+                    fill: '#9C9389',
                     fontSize: 11,
-                    fontFamily: "'JetBrains Mono', monospace",
+                    fontFamily: "'Bebas Neue', sans-serif",
                   }}
                 />
               </Bar>

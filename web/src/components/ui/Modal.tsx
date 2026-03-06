@@ -21,7 +21,6 @@ const sizeClasses = {
 export function Modal({ open, onClose, title, children, actions, size = 'md' }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
     function handleKey(e: KeyboardEvent) {
@@ -31,13 +30,11 @@ export function Modal({ open, onClose, title, children, actions, size = 'md' }: 
     return () => document.removeEventListener('keydown', handleKey);
   }, [open, onClose]);
 
-  // Prevent body scroll
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
-  // Focus first focusable element
   useEffect(() => {
     if (!open) return;
     const dialog = dialogRef.current;
@@ -61,25 +58,25 @@ export function Modal({ open, onClose, title, children, actions, size = 'md' }: 
       <div
         aria-hidden="true"
         onClick={onClose}
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/40 backdrop-blur-sm"
       />
 
       {/* Dialog */}
       <div
         ref={dialogRef}
         className={cn(
-          'relative z-10 flex flex-col w-full rounded-[8px] bg-surface-card border border-border-subtle shadow-2xl',
+          'relative z-10 flex flex-col w-full rounded-card bg-cream border border-ink shadow-card',
           'animate-in fade-in zoom-in-95 duration-200',
           sizeClasses[size]
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border-subtle">
-          <h2 className="text-base font-semibold text-text-primary">{title}</h2>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-ink/15">
+          <h2 className="font-display text-xl tracking-wide text-ink uppercase">{title}</h2>
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="flex h-7 w-7 items-center justify-center rounded-[6px] text-text-muted transition-colors hover:bg-surface-hover hover:text-text-primary"
+            className="flex h-7 w-7 items-center justify-center rounded-[8px] text-rubble transition-colors hover:bg-ink/5 hover:text-ink"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -88,11 +85,11 @@ export function Modal({ open, onClose, title, children, actions, size = 'md' }: 
         </div>
 
         {/* Body */}
-        <div className="px-5 py-4 text-sm text-text-secondary">{children}</div>
+        <div className="px-5 py-4 text-sm text-stone">{children}</div>
 
         {/* Actions */}
         {actions && (
-          <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-border-subtle">
+          <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-ink/15">
             {actions}
           </div>
         )}

@@ -13,9 +13,9 @@ interface ProgressBarProps {
 
 const colorClasses: Record<string, string> = {
   accent: 'bg-accent',
-  success: 'bg-green-500',
-  warning: 'bg-amber-500',
-  danger: 'bg-red-500',
+  success: 'bg-green-600',
+  warning: 'bg-amber-600',
+  danger: 'bg-red-600',
 };
 
 const sizeClasses = {
@@ -37,9 +37,9 @@ export function ProgressBar({
     <div className={cn('flex flex-col gap-1', className)}>
       {(label || showValue) && (
         <div className="flex items-center justify-between">
-          {label && <span className="text-xs text-text-secondary">{label}</span>}
+          {label && <span className="text-xs text-stone">{label}</span>}
           {showValue && (
-            <span className="text-xs font-medium text-text-primary">{clamped}%</span>
+            <span className="text-xs font-medium text-ink">{clamped}%</span>
           )}
         </div>
       )}
@@ -50,7 +50,7 @@ export function ProgressBar({
         aria-valuemax={100}
         aria-label={label}
         className={cn(
-          'w-full overflow-hidden rounded-full bg-surface-active',
+          'w-full overflow-hidden rounded-full bg-ink/10',
           sizeClasses[size]
         )}
       >

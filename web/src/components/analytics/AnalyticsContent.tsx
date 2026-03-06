@@ -13,7 +13,7 @@ import { ScanHistoryChart } from './ScanHistoryChart';
 function SkeletonBlock({ className }: { className?: string }) {
   return (
     <div
-      className={`rounded-[8px] border border-border-subtle bg-surface-card animate-pulse ${className ?? ''}`}
+      className={`rounded-[8px] border border-ink/10 bg-cream-dark animate-pulse ${className ?? ''}`}
     />
   );
 }
@@ -27,25 +27,25 @@ function TopTradesCard({ byTrade }: { byTrade: { trade: string; count: number }[
   const maxCount = Math.max(...top.map((t) => t.count), 1);
 
   return (
-    <div className="rounded-[8px] border border-border-subtle bg-surface-card">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border-subtle">
-        <h3 className="text-sm font-semibold text-text-primary">Leads by Trade</h3>
-        <span className="text-xs text-text-muted">{byTrade.length} trades</span>
+    <div className="rounded-[8px] border border-ink/10 bg-cream-dark">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-ink/10">
+        <h3 className="text-sm font-semibold text-ink">Leads by Trade</h3>
+        <span className="text-xs text-rubble">{byTrade.length} trades</span>
       </div>
       <div className="p-4">
         {top.length === 0 ? (
-          <p className="py-8 text-sm text-center text-text-muted">No data yet</p>
+          <p className="py-8 text-sm text-center text-rubble">No data yet</p>
         ) : (
           <div className="flex flex-col gap-2.5">
             {top.map((item) => (
               <div key={item.trade} className="flex items-center gap-3">
                 <span
-                  className="text-xs text-text-secondary truncate shrink-0 capitalize"
+                  className="text-xs text-stone truncate shrink-0 capitalize"
                   style={{ width: 112 }}
                 >
                   {item.trade}
                 </span>
-                <div className="flex-1 h-1.5 rounded-full bg-surface-active overflow-hidden">
+                <div className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{
@@ -55,7 +55,7 @@ function TopTradesCard({ byTrade }: { byTrade: { trade: string; count: number }[
                     }}
                   />
                 </div>
-                <span className="text-xs font-mono text-text-muted tabular-nums w-8 text-right">
+                <span className="text-xs font-display text-rubble tabular-nums w-8 text-right">
                   {item.count}
                 </span>
               </div>
@@ -79,14 +79,14 @@ interface AnalyticsTileProps {
 
 function AnalyticsTile({ label, value, sub }: AnalyticsTileProps) {
   return (
-    <div className="rounded-[8px] border border-border-subtle bg-surface-card p-4 flex flex-col gap-2">
-      <span className="text-xs font-medium text-text-muted uppercase tracking-wider">
+    <div className="rounded-[8px] border border-ink/10 bg-cream-dark p-4 flex flex-col gap-2">
+      <span className="text-xs font-medium text-rubble uppercase tracking-wider">
         {label}
       </span>
-      <span className="text-2xl font-mono font-semibold text-text-primary tabular-nums leading-none">
+      <span className="text-2xl font-display font-semibold text-ink tabular-nums leading-none">
         {typeof value === 'number' ? value.toLocaleString('en-US') : value}
       </span>
-      {sub && <span className="text-xs text-text-muted">{sub}</span>}
+      {sub && <span className="text-xs text-rubble">{sub}</span>}
     </div>
   );
 }
@@ -124,7 +124,7 @@ export function AnalyticsContent() {
   if (isError || !stats) {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
-        <div className="text-text-muted">
+        <div className="text-rubble">
           <svg
             width="40"
             height="40"
@@ -139,7 +139,7 @@ export function AnalyticsContent() {
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
         </div>
-        <p className="text-sm text-text-secondary">
+        <p className="text-sm text-stone">
           Failed to load analytics data.
         </p>
         <Button variant="secondary" size="sm" onClick={mutate}>

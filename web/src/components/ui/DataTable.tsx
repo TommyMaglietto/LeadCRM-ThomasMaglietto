@@ -28,7 +28,7 @@ interface DataTableProps<T> {
 
 function SortIcon({ active, order }: { active: boolean; order: 'asc' | 'desc' }) {
   return (
-    <span className={cn('inline-flex flex-col ml-1', active ? 'text-accent' : 'text-text-muted')}>
+    <span className={cn('inline-flex flex-col ml-1', active ? 'text-accent' : 'text-rubble')}>
       <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" className={cn('mb-[1px]', active && order === 'asc' ? 'opacity-100' : 'opacity-40')}>
         <path d="M4 1L7 5H1L4 1Z" />
       </svg>
@@ -56,14 +56,14 @@ export function DataTable<T extends { id: number }>({
     <div className={cn('relative w-full overflow-x-auto', className)}>
       <table className="w-full border-collapse text-sm">
         <thead>
-          <tr className="border-b border-border-subtle">
+          <tr className="border-b border-ink/15">
             {columns.map((col) => (
               <th
                 key={col.key}
                 style={col.width ? { width: col.width } : undefined}
                 className={cn(
-                  'px-3 py-2.5 text-left text-xs font-medium text-text-muted select-none whitespace-nowrap',
-                  col.sortable && 'cursor-pointer hover:text-text-secondary',
+                  'px-3 py-2.5 text-left text-xs font-medium text-rubble select-none whitespace-nowrap uppercase tracking-wider',
+                  col.sortable && 'cursor-pointer hover:text-stone',
                   col.className
                 )}
                 onClick={col.sortable && onSort ? () => onSort(col.key) : undefined}
@@ -83,7 +83,7 @@ export function DataTable<T extends { id: number }>({
           {isLoading && (
             <tr>
               <td colSpan={columns.length} className="py-16 text-center">
-                <div className="flex items-center justify-center gap-2 text-text-muted">
+                <div className="flex items-center justify-center gap-2 text-rubble">
                   <Spinner size="sm" />
                   <span className="text-sm">Loading leads...</span>
                 </div>
@@ -92,14 +92,14 @@ export function DataTable<T extends { id: number }>({
           )}
           {isError && !isLoading && (
             <tr>
-              <td colSpan={columns.length} className="py-16 text-center text-sm text-red-400">
+              <td colSpan={columns.length} className="py-16 text-center text-sm text-red-600">
                 Failed to load data. Please try again.
               </td>
             </tr>
           )}
           {!isLoading && !isError && data.length === 0 && (
             <tr>
-              <td colSpan={columns.length} className="py-16 text-center text-sm text-text-muted">
+              <td colSpan={columns.length} className="py-16 text-center text-sm text-rubble">
                 {emptyMessage}
               </td>
             </tr>
@@ -109,8 +109,8 @@ export function DataTable<T extends { id: number }>({
               key={row.id}
               onClick={onRowClick ? () => onRowClick(row) : undefined}
               className={cn(
-                'border-b border-border-subtle transition-colors duration-75',
-                onRowClick && 'cursor-pointer hover:bg-surface-hover',
+                'border-b border-ink/10 transition-colors duration-75',
+                onRowClick && 'cursor-pointer hover:bg-ink/[0.03]',
                 rowClassName?.(row)
               )}
               style={{ height: '44px' }}

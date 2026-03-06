@@ -8,12 +8,12 @@ interface HeaderProps {
 
 export function Header({ title, actions, breadcrumb }: HeaderProps) {
   return (
-    <header className="flex h-12 shrink-0 items-center justify-between border-b border-border-subtle bg-surface px-6">
+    <header className="flex h-14 shrink-0 items-center justify-between border-b border-ink/10 bg-cream px-6">
       <div className="flex flex-col justify-center min-w-0">
         {breadcrumb && (
-          <span className="text-[11px] text-text-muted leading-none mb-0.5">{breadcrumb}</span>
+          <span className="text-[11px] text-rubble leading-none mb-1 uppercase tracking-wider font-medium">{breadcrumb}</span>
         )}
-        <h1 className="text-sm font-semibold text-text-primary truncate leading-none">
+        <h1 className="font-display text-2xl text-ink tracking-wide uppercase truncate leading-none">
           {title}
         </h1>
       </div>

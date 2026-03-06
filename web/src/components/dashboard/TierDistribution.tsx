@@ -12,17 +12,13 @@ import { Card } from '@/components/ui/Card';
 import { LEAD_TIERS } from '@/lib/constants';
 import type { DashboardStats } from '@/lib/types';
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
+// --- Types ----------------------------------------------------------------
 
 interface TierDistributionProps {
   byTier: DashboardStats['byTier'];
 }
 
-// ---------------------------------------------------------------------------
-// Recharts dark-theme tooltip
-// ---------------------------------------------------------------------------
+// --- Tooltip --------------------------------------------------------------
 
 interface TooltipPayloadEntry {
   name: string;
@@ -43,27 +39,25 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
   return (
     <div
       style={{
-        backgroundColor: '#18181b',
-        border: '1px solid #3f3f46',
+        backgroundColor: '#1A1A18',
+        border: '1px solid #1A1A18',
         borderRadius: '8px',
         padding: '8px 12px',
-        color: '#fafafa',
+        color: '#EDE9E1',
         fontSize: '13px',
       }}
     >
       <p style={{ color: entry.payload.fill, fontWeight: 600, marginBottom: 2 }}>
         {entry.name}
       </p>
-      <p style={{ color: '#a1a1aa' }}>
+      <p style={{ color: '#9C9389' }}>
         {entry.value.toLocaleString('en-US')} leads
       </p>
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
+// --- Main component -------------------------------------------------------
 
 export function TierDistribution({ byTier }: TierDistributionProps) {
   const data = LEAD_TIERS.map((tier) => ({
@@ -74,15 +68,13 @@ export function TierDistribution({ byTier }: TierDistributionProps) {
 
   const total = Object.values(byTier).reduce((a, b) => a + b, 0);
 
-  // If there's no data yet, show a placeholder ring
   const displayData =
     data.length > 0
       ? data
-      : [{ name: 'No data', value: 1, fill: '#27272a' }];
+      : [{ name: 'No data', value: 1, fill: '#D9D4C9' }];
 
   return (
     <Card title="Lead Tiers">
-      {/* Relative container so we can absolutely-position the center label */}
       <div style={{ height: 260, position: 'relative' }}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -93,7 +85,7 @@ export function TierDistribution({ byTier }: TierDistributionProps) {
               innerRadius={68}
               outerRadius={100}
               dataKey="value"
-              stroke="#111113"
+              stroke="#D9D4C9"
               strokeWidth={2}
               paddingAngle={data.length > 1 ? 2 : 0}
               labelLine={false}
@@ -108,18 +100,18 @@ export function TierDistribution({ byTier }: TierDistributionProps) {
               iconType="circle"
               iconSize={8}
               wrapperStyle={{
-                color: '#a1a1aa',
+                color: '#6B6560',
                 fontSize: '12px',
                 paddingTop: '8px',
               }}
               formatter={(value: string) => (
-                <span style={{ color: '#a1a1aa' }}>{value}</span>
+                <span style={{ color: '#6B6560' }}>{value}</span>
               )}
             />
           </PieChart>
         </ResponsiveContainer>
 
-        {/* Center label — absolutely positioned over the donut hole */}
+        {/* Center label */}
         <div
           aria-hidden="true"
           style={{
@@ -129,16 +121,16 @@ export function TierDistribution({ byTier }: TierDistributionProps) {
             transform: 'translate(-50%, -50%)',
             textAlign: 'center',
             pointerEvents: 'none',
-            // Legend is ~28px tall at bottom; Pie cy is at 45% of 260 ≈ 117px
           }}
         >
           <div
             style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: '22px',
-              fontWeight: 600,
-              color: '#fafafa',
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: '28px',
+              fontWeight: 400,
+              color: '#1A1A18',
               lineHeight: 1,
+              letterSpacing: '0.05em',
             }}
           >
             {total.toLocaleString('en-US')}
@@ -146,9 +138,11 @@ export function TierDistribution({ byTier }: TierDistributionProps) {
           <div
             style={{
               fontSize: '11px',
-              color: '#71717a',
+              color: '#9C9389',
               marginTop: '4px',
-              fontFamily: 'Inter, sans-serif',
+              fontFamily: "'DM Sans', sans-serif",
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
             }}
           >
             total

@@ -79,11 +79,11 @@ export function ScanProgress({ scan, startedAt, onCancel }: ScanProgressProps) {
 
       {/* Status text */}
       <div className="flex flex-col items-center gap-1.5 text-center">
-        <p className="text-base font-semibold text-text-primary">{statusMessage}</p>
+        <p className="text-base font-semibold text-ink">{statusMessage}</p>
         {detail && (
-          <p className="text-xs text-text-secondary">{detail}</p>
+          <p className="text-xs text-stone">{detail}</p>
         )}
-        <p className="text-xs text-text-muted">
+        <p className="text-xs text-rubble">
           Elapsed: {formatElapsed(elapsed)}
         </p>
       </div>
@@ -101,27 +101,27 @@ export function ScanProgress({ scan, startedAt, onCancel }: ScanProgressProps) {
 
       {/* Items counter (when enrichment is active) */}
       {itemsDone > 0 && itemsTotal > 0 && (
-        <p className="text-xs text-text-muted font-mono">
+        <p className="text-xs text-rubble font-display">
           {itemsDone} / {itemsTotal} items
         </p>
       )}
 
       {/* Partial results if available */}
       {scan && scan.total_found > 0 && (
-        <div className="rounded-[8px] border border-border-subtle bg-surface-card px-4 py-3 w-full max-w-xs">
-          <p className="text-xs text-text-muted mb-2 font-medium uppercase tracking-wide">
+        <div className="rounded-[8px] border border-ink/10 bg-cream-dark px-4 py-3 w-full max-w-xs">
+          <p className="text-xs text-rubble mb-2 font-medium uppercase tracking-wide">
             Results so far
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col gap-0.5">
-              <span className="text-[11px] text-text-muted">Found</span>
-              <span className="text-sm font-semibold text-text-primary font-mono">
+              <span className="text-[11px] text-rubble">Found</span>
+              <span className="text-sm font-semibold text-ink font-display">
                 {scan.total_found}
               </span>
             </div>
             <div className="flex flex-col gap-0.5">
-              <span className="text-[11px] text-text-muted">New</span>
-              <span className="text-sm font-semibold text-green-400 font-mono">
+              <span className="text-[11px] text-rubble">New</span>
+              <span className="text-sm font-semibold text-green-700 font-display">
                 {scan.new_inserted}
               </span>
             </div>
@@ -134,7 +134,7 @@ export function ScanProgress({ scan, startedAt, onCancel }: ScanProgressProps) {
         <button
           type="button"
           onClick={onCancel}
-          className="text-xs text-text-muted hover:text-text-secondary transition-colors underline underline-offset-2"
+          className="text-xs text-rubble hover:text-stone transition-colors underline underline-offset-2"
         >
           Cancel (stops polling, scan continues in background)
         </button>

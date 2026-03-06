@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/cn';
 
-// ─── Icons ────────────────────────────────────────────────────────────────────
+// --- Icons ----------------------------------------------------------------
 
 function DashboardIcon({ className }: { className?: string }) {
   return (
@@ -54,7 +54,7 @@ function AnalyticsIcon({ className }: { className?: string }) {
   );
 }
 
-// ─── Nav config ───────────────────────────────────────────────────────────────
+// --- Nav config -----------------------------------------------------------
 
 const NAV_ITEMS = [
   { href: '/dashboard',  label: 'Dashboard',  Icon: DashboardIcon },
@@ -64,25 +64,26 @@ const NAV_ITEMS = [
   { href: '/analytics',  label: 'Analytics',  Icon: AnalyticsIcon },
 ] as const;
 
-// ─── Sidebar ──────────────────────────────────────────────────────────────────
+// --- Sidebar --------------------------------------------------------------
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
     <aside
-      style={{ width: 240, backgroundColor: '#111113' }}
-      className="fixed inset-y-0 left-0 z-30 flex flex-col border-r border-border-subtle"
+      style={{ width: 240 }}
+      className="fixed inset-y-0 left-0 z-30 flex flex-col bg-ink border-r border-ink"
     >
       {/* Logo */}
-      <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border-subtle shrink-0">
-        <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-accent">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M7 1L12 4v6L7 13 2 10V4L7 1z" fill="white" fillOpacity="0.9" />
-            <path d="M7 1L12 4v6L7 13 2 10V4L7 1z" stroke="white" strokeWidth="0.8" strokeOpacity="0.5" />
+      <div className="flex items-center gap-2.5 px-5 py-4 border-b border-white/10 shrink-0">
+        <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-accent">
+          <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+            <path d="M7 1L12 4v6L7 13 2 10V4L7 1z" fill="#EDE9E1" fillOpacity="0.9" />
           </svg>
         </div>
-        <span className="text-sm font-bold text-text-primary tracking-tight">LeadGen</span>
+        <span className="font-display text-xl tracking-wider text-cream uppercase">
+          LeadGen
+        </span>
       </div>
 
       {/* Navigation */}
@@ -96,16 +97,16 @@ export function Sidebar() {
                   href={href}
                   aria-current={isActive ? 'page' : undefined}
                   className={cn(
-                    'flex items-center gap-2.5 rounded-[6px] px-3 py-2 text-sm font-medium transition-colors duration-100',
+                    'flex items-center gap-2.5 rounded-[8px] px-3 py-2.5 text-sm font-medium transition-colors duration-100',
                     isActive
-                      ? 'bg-accent/20 text-accent'
-                      : 'text-text-secondary hover:bg-surface-hover hover:text-text-primary'
+                      ? 'bg-accent text-cream'
+                      : 'text-cream/60 hover:bg-white/8 hover:text-cream'
                   )}
                 >
                   <Icon
                     className={cn(
                       'shrink-0 transition-colors',
-                      isActive ? 'text-accent' : 'text-text-muted'
+                      isActive ? 'text-cream' : 'text-cream/40'
                     )}
                   />
                   {label}
@@ -117,9 +118,9 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="shrink-0 px-5 py-3 border-t border-border-subtle">
-        <p className="text-[11px] text-text-muted leading-tight">LeadGen v1.0.0</p>
-        <p className="text-[11px] text-text-muted/60 leading-tight">Local Business CRM</p>
+      <div className="shrink-0 px-5 py-3 border-t border-white/10">
+        <p className="text-[11px] text-cream/40 leading-tight">LeadGen v1.0.0</p>
+        <p className="text-[11px] text-cream/25 leading-tight">Local Business CRM</p>
       </div>
     </aside>
   );

@@ -17,38 +17,41 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: [
-    'bg-accent text-white border border-transparent',
+    'bg-accent text-cream border border-ink',
     'hover:bg-accent-hover',
-    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
-    'disabled:bg-accent/40 disabled:cursor-not-allowed',
+    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream',
+    'shadow-card-sm hover:shadow-card transition-shadow',
+    'disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none',
   ].join(' '),
 
   secondary: [
-    'bg-transparent text-text-primary border border-border',
-    'hover:bg-surface-hover hover:border-border-DEFAULT',
-    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
-    'disabled:opacity-40 disabled:cursor-not-allowed',
+    'bg-cream text-ink border border-ink',
+    'hover:bg-cream-dark',
+    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream',
+    'shadow-card-sm hover:shadow-card transition-shadow',
+    'disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none',
   ].join(' '),
 
   ghost: [
-    'bg-transparent text-text-secondary border border-transparent',
-    'hover:bg-surface-hover hover:text-text-primary',
-    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+    'bg-transparent text-stone border border-transparent',
+    'hover:bg-ink/5 hover:text-ink',
+    'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream',
     'disabled:opacity-40 disabled:cursor-not-allowed',
   ].join(' '),
 
   danger: [
-    'bg-red-500/10 text-red-400 border border-red-500/30',
-    'hover:bg-red-500/20 hover:border-red-500/50',
-    'focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
-    'disabled:opacity-40 disabled:cursor-not-allowed',
+    'bg-red-50 text-red-700 border border-ink',
+    'hover:bg-red-100',
+    'focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream',
+    'shadow-card-sm hover:shadow-card transition-shadow',
+    'disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none',
   ].join(' '),
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-7 px-2.5 text-xs gap-1.5 rounded-[6px]',
-  md: 'h-8 px-3 text-sm gap-2 rounded-[6px]',
-  lg: 'h-10 px-4 text-sm gap-2 rounded-[6px]',
+  sm: 'h-7 px-2.5 text-xs gap-1.5 rounded-[8px]',
+  md: 'h-8 px-3 text-sm gap-2 rounded-[8px]',
+  lg: 'h-10 px-4 text-sm gap-2 rounded-[8px]',
 };
 
 const spinnerSize: Record<ButtonSize, 'xs' | 'sm'> = {

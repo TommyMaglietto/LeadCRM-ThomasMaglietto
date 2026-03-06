@@ -30,7 +30,7 @@ interface LeadQualityChartProps {
 // ---------------------------------------------------------------------------
 
 const BUCKETS: { label: string; color: string; tier: keyof DashboardStats['byTier'] | null }[] = [
-  { label: 'Skip (<0)',  color: '#71717a', tier: 'skip' },
+  { label: 'Skip (<0)',  color: '#9C9389', tier: 'skip' },
   { label: 'Cold (0-7)', color: '#3b82f6', tier: 'cold' },
   { label: 'Warm (8-11)', color: '#f59e0b', tier: 'warm' },
   { label: 'Hot (12+)',  color: '#ef4444', tier: 'hot'  },
@@ -58,18 +58,18 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
   return (
     <div
       style={{
-        backgroundColor: '#18181b',
-        border: '1px solid #3f3f46',
+        backgroundColor: '#1A1A18',
+        border: '1px solid #1A1A18',
         borderRadius: '8px',
         padding: '8px 12px',
-        color: '#fafafa',
+        color: '#EDE9E1',
         fontSize: '13px',
       }}
     >
       <p style={{ color: entry.payload.fill, fontWeight: 600, marginBottom: 2 }}>
         {entry.payload.label}
       </p>
-      <p style={{ color: '#a1a1aa' }}>
+      <p style={{ color: '#6B6560' }}>
         {entry.value.toLocaleString('en-US')} leads
       </p>
     </div>
@@ -97,19 +97,19 @@ export function LeadQualityChart({ byTier }: LeadQualityChartProps) {
           >
             <XAxis
               dataKey="label"
-              tick={{ fill: '#a1a1aa', fontSize: 11 }}
-              axisLine={{ stroke: '#27272a' }}
+              tick={{ fill: '#6B6560', fontSize: 11 }}
+              axisLine={{ stroke: 'rgba(26,26,24,0.12)' }}
               tickLine={false}
             />
             <YAxis
-              tick={{ fill: '#71717a', fontSize: 11 }}
+              tick={{ fill: '#9C9389', fontSize: 11 }}
               axisLine={false}
               tickLine={false}
               width={36}
             />
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+              cursor={{ fill: 'rgba(26,26,24,0.04)' }}
             />
             <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={56}>
               {data.map((entry, index) => (
@@ -119,9 +119,9 @@ export function LeadQualityChart({ byTier }: LeadQualityChartProps) {
                 dataKey="value"
                 position="top"
                 style={{
-                  fill: '#71717a',
+                  fill: '#9C9389',
                   fontSize: 11,
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "'Bebas Neue', sans-serif",
                 }}
               />
             </Bar>

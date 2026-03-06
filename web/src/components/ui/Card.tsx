@@ -14,13 +14,13 @@ export function Card({ title, children, className, headerAction, noPadding = fal
   return (
     <div
       className={cn(
-        'rounded-[8px] border border-border-subtle bg-surface-card',
+        'rounded-card border border-ink bg-cream-dark shadow-card',
         className
       )}
     >
       {title && (
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border-subtle">
-          <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-ink/15">
+          <h3 className="font-display text-lg tracking-wide text-ink uppercase">{title}</h3>
           {headerAction && (
             <div className="flex items-center gap-2">{headerAction}</div>
           )}

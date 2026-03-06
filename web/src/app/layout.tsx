@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { DM_Sans } from 'next/font/google';
 import './globals.css';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { ToastProvider } from '@/components/ui/Toast';
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  weight: ['300', '400', '500'],
+  variable: '--font-dm-sans',
 });
 
 export const metadata: Metadata = {
@@ -24,13 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={dmSans.variable} suppressHydrationWarning>
       <head />
-      <body className="min-h-screen bg-surface font-sans text-text-primary antialiased">
+      <body className="min-h-screen bg-cream font-sans text-ink antialiased">
         <ToastProvider>
           <div className="flex h-screen overflow-hidden">
             <Sidebar />
-            {/* Main content area shifted right by sidebar width */}
             <div
               className="flex flex-col flex-1 min-w-0 overflow-hidden"
               style={{ marginLeft: 240 }}

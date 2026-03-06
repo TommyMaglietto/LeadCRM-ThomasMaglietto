@@ -44,8 +44,8 @@ function MapPinIcon() {
 
 function StarIcon({ filled }: { filled: boolean }) {
   return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill={filled ? '#f59e0b' : 'none'} className="shrink-0">
-      <path d="M6 1l1.4 3h3.1L7.9 6.1l1 3L6 7.5 3.1 9.1l1-3L1.5 4H4.6L6 1z" stroke="#f59e0b" strokeWidth="1" strokeLinejoin="round" />
+    <svg width="12" height="12" viewBox="0 0 12 12" fill={filled ? '#B8860B' : 'none'} className="shrink-0">
+      <path d="M6 1l1.4 3h3.1L7.9 6.1l1 3L6 7.5 3.1 9.1l1-3L1.5 4H4.6L6 1z" stroke="#B8860B" strokeWidth="1" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -61,7 +61,7 @@ function ExternalLinkIcon() {
 // ─── Star Rating ─────────────────────────────────────────────────────────────
 
 function StarRating({ rating }: { rating: number | null }) {
-  if (rating === null) return <span className="text-text-muted text-xs">—</span>;
+  if (rating === null) return <span className="text-rubble text-xs">—</span>;
   const stars = Math.round(rating);
   return (
     <span className="flex items-center gap-0.5">
@@ -77,7 +77,7 @@ function StarRating({ rating }: { rating: number | null }) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="text-xs font-semibold uppercase tracking-wider text-text-muted">{title}</h3>
+      <h3 className="text-xs font-semibold uppercase tracking-wider text-rubble">{title}</h3>
       {children}
     </div>
   );
@@ -88,8 +88,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function DetailItem({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-[11px] font-medium text-text-muted uppercase tracking-wide">{label}</span>
-      <div className="text-sm text-text-primary">{children}</div>
+      <span className="text-[11px] font-medium text-rubble uppercase tracking-wide">{label}</span>
+      <div className="text-sm text-ink">{children}</div>
     </div>
   );
 }
@@ -187,7 +187,7 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
       )}
 
       {!isLoading && !lead && (
-        <div className="flex items-center justify-center h-48 text-text-muted text-sm">
+        <div className="flex items-center justify-center h-48 text-rubble text-sm">
           Lead not found.
         </div>
       )}
@@ -199,8 +199,8 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
             <TierBadge tier={lead.lead_tier} />
             <span
               className={cn(
-                'text-xs font-semibold font-mono',
-                lead.lead_score > 0 ? 'text-green-400' : lead.lead_score < 0 ? 'text-red-400' : 'text-text-muted'
+                'text-xs font-semibold font-display',
+                lead.lead_score > 0 ? 'text-green-700' : lead.lead_score < 0 ? 'text-red-600' : 'text-rubble'
               )}
             >
               Score: {formatScore(lead.lead_score)}
@@ -213,9 +213,9 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
               {lead.phone && (
                 <a
                   href={`tel:${lead.phone}`}
-                  className="flex items-center gap-2 text-sm text-text-primary hover:text-accent transition-colors"
+                  className="flex items-center gap-2 text-sm text-ink hover:text-accent transition-colors"
                 >
-                  <span className="text-text-muted"><PhoneIcon /></span>
+                  <span className="text-rubble"><PhoneIcon /></span>
                   {formatPhone(lead.phone)}
                 </a>
               )}
@@ -225,19 +225,19 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
                   href={lead.website_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-text-primary hover:text-accent transition-colors group"
+                  className="flex items-center gap-2 text-sm text-ink hover:text-accent transition-colors group"
                 >
-                  <span className="text-text-muted"><GlobeIcon /></span>
+                  <span className="text-rubble"><GlobeIcon /></span>
                   <span className="truncate">{lead.website_url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity text-text-muted">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity text-rubble">
                     <ExternalLinkIcon />
                   </span>
                 </a>
               )}
 
               {lead.address && (
-                <div className="flex items-center gap-2 text-sm text-text-secondary">
-                  <span className="text-text-muted"><MapPinIcon /></span>
+                <div className="flex items-center gap-2 text-sm text-stone">
+                  <span className="text-rubble"><MapPinIcon /></span>
                   <span>{lead.address}{lead.city ? `, ${lead.city}` : ''}{lead.state ? `, ${lead.state}` : ''}</span>
                 </div>
               )}
@@ -245,10 +245,10 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
               {lead.google_rating !== null && (
                 <div className="flex items-center gap-2">
                   <StarRating rating={lead.google_rating} />
-                  <span className="text-sm text-text-secondary">
+                  <span className="text-sm text-stone">
                     {formatRating(lead.google_rating)}
                     {lead.google_review_count !== null && (
-                      <span className="text-text-muted ml-1">({formatCount(lead.google_review_count)} reviews)</span>
+                      <span className="text-rubble ml-1">({formatCount(lead.google_review_count)} reviews)</span>
                     )}
                   </span>
                 </div>
@@ -275,9 +275,9 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
               <DetailItem label="Franchise">
                 <span className={cn(
                   'text-sm',
-                  lead.franchise_flag === 'definite_franchise' ? 'text-red-400' :
-                  lead.franchise_flag === 'likely_franchise'   ? 'text-amber-400' :
-                  'text-text-secondary'
+                  lead.franchise_flag === 'definite_franchise' ? 'text-red-600' :
+                  lead.franchise_flag === 'likely_franchise'   ? 'text-amber-700' :
+                  'text-stone'
                 )}>
                   {humanize(lead.franchise_flag)}
                 </span>
@@ -285,12 +285,12 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
 
               <DetailItem label="Yelp">
                 {lead.has_yelp === 'true' ? (
-                  <span className="text-green-400 text-sm flex items-center gap-1">
+                  <span className="text-green-700 text-sm flex items-center gap-1">
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M10 3L4.5 8.5 2 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
                     Yes
                   </span>
                 ) : (
-                  <span className="text-text-muted text-sm">—</span>
+                  <span className="text-rubble text-sm">—</span>
                 )}
               </DetailItem>
 
@@ -300,14 +300,14 @@ export function LeadDrawer({ leadId, open, onClose }: LeadDrawerProps) {
                     {trades.map((t) => (
                       <span
                         key={t}
-                        className="px-1.5 py-0.5 rounded-[3px] text-[11px] bg-surface-active text-text-secondary"
+                        className="px-1.5 py-0.5 rounded-[3px] text-[11px] bg-ink/10 text-stone"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
                 ) : (
-                  <span className="text-text-muted">—</span>
+                  <span className="text-rubble">—</span>
                 )}
               </DetailItem>
 

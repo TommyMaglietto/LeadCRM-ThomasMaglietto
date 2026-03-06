@@ -14,17 +14,13 @@ import { Card } from '@/components/ui/Card';
 import { WEBSITE_STATUSES } from '@/lib/constants';
 import type { DashboardStats } from '@/lib/types';
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
+// --- Types ----------------------------------------------------------------
 
 interface WebsiteStatusChartProps {
   byWebsiteStatus: DashboardStats['byWebsiteStatus'];
 }
 
-// ---------------------------------------------------------------------------
-// Dark tooltip
-// ---------------------------------------------------------------------------
+// --- Tooltip --------------------------------------------------------------
 
 interface TooltipPayloadEntry {
   value: number;
@@ -44,30 +40,27 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
   return (
     <div
       style={{
-        backgroundColor: '#18181b',
-        border: '1px solid #3f3f46',
+        backgroundColor: '#1A1A18',
+        border: '1px solid #1A1A18',
         borderRadius: '8px',
         padding: '8px 12px',
-        color: '#fafafa',
+        color: '#EDE9E1',
         fontSize: '13px',
       }}
     >
       <p style={{ color: entry.payload.fill, fontWeight: 600, marginBottom: 2 }}>
         {entry.payload.label}
       </p>
-      <p style={{ color: '#a1a1aa' }}>
+      <p style={{ color: '#9C9389' }}>
         {entry.value.toLocaleString('en-US')} leads
       </p>
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
+// --- Main component -------------------------------------------------------
 
 export function WebsiteStatusChart({ byWebsiteStatus }: WebsiteStatusChartProps) {
-  // Build chart data in the canonical order from WEBSITE_STATUSES
   const data = WEBSITE_STATUSES.map((ws) => ({
     key: ws.value,
     label: ws.label,
@@ -75,7 +68,6 @@ export function WebsiteStatusChart({ byWebsiteStatus }: WebsiteStatusChartProps)
     fill: ws.color,
   })).filter((d) => d.value > 0);
 
-  // Sort descending by count so largest bar is at top
   const sorted = [...data].sort((a, b) => b.value - a.value);
 
   return (
@@ -89,21 +81,21 @@ export function WebsiteStatusChart({ byWebsiteStatus }: WebsiteStatusChartProps)
           >
             <XAxis
               type="number"
-              tick={{ fill: '#71717a', fontSize: 11 }}
-              axisLine={{ stroke: '#27272a' }}
+              tick={{ fill: '#9C9389', fontSize: 11 }}
+              axisLine={{ stroke: 'rgba(26, 26, 24, 0.12)' }}
               tickLine={false}
             />
             <YAxis
               type="category"
               dataKey="label"
               width={90}
-              tick={{ fill: '#a1a1aa', fontSize: 11 }}
+              tick={{ fill: '#6B6560', fontSize: 11 }}
               axisLine={false}
               tickLine={false}
             />
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+              cursor={{ fill: 'rgba(26, 26, 24, 0.04)' }}
             />
             <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={20}>
               {sorted.map((entry, index) => (
@@ -112,7 +104,7 @@ export function WebsiteStatusChart({ byWebsiteStatus }: WebsiteStatusChartProps)
               <LabelList
                 dataKey="value"
                 position="right"
-                style={{ fill: '#71717a', fontSize: 11, fontFamily: "'JetBrains Mono', monospace" }}
+                style={{ fill: '#9C9389', fontSize: 11, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.05em' }}
               />
             </Bar>
           </BarChart>
